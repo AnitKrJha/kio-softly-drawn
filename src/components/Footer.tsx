@@ -148,7 +148,7 @@ export function Footer() {
               </p>
             )}
             <TLink to="/contact" className="footer__cta link">
-              Start a commission
+              Work with me
             </TLink>
           </div>
         </div>

@@ -258,7 +258,7 @@ export function ContactForm() {
       <form className="contact-form__letter" onSubmit={onSubmit} noValidate aria-describedby="contact-form-intro">
         <p className="contact-form__salutation serif" id="contact-form-intro">
           <span aria-hidden="true">Dear Kio,</span>
-          <span className="visually-hidden">Commission enquiry form. Fields marked optional can be left empty.</span>
+          <span className="visually-hidden">Work enquiry form. Fields marked optional can be left empty.</span>
         </p>
 
         <div className="contact-form__row">
@@ -337,7 +337,7 @@ export function ContactForm() {
 
         <Field
           name="message"
-          label="Tell me about your character"
+          label="Tell me about your project"
           multiline
           rows={4}
           value={values.message}

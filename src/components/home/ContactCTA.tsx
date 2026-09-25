@@ -148,10 +148,10 @@ export function ContactCTA() {
           </div>
 
           <div className="cta__magnet">
-            <TLink to="/contact" className="cta__btn" aria-label="Start a commission">
+            <TLink to="/contact" className="cta__btn" aria-label="Work with me">
               <span className="cta__btn-label">
-                Start a<br />
-                commission
+                Work<br />
+                with me
                 <ArrowUpRight size={20} aria-hidden="true" />
               </span>
             </TLink>

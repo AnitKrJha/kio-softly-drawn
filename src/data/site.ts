@@ -8,7 +8,7 @@ export const site = {
     'My style leans toward soft, detailed visuals with a focus on natural expressions and clean rendering. Feel free to message me anytime.',
   ],
   email: 'jhaanushka493@gmail.com',
-  status: 'Open for commissions',
+  status: 'Available for work',
   threads: { label: 'Threads', handle: '@softlydrawn_', url: 'https://www.threads.com/@softlydrawn_' },
   fiverr: {
     label: 'Fiverr',

@@ -211,7 +211,7 @@ export function Services() {
 
   return (
     <section
-      id="commissions"
+      id="services"
       data-theme="light"
       className="services section"
       ref={root}
@@ -219,7 +219,7 @@ export function Services() {
     >
       <div className="container">
         <header className="services__head">
-          <p className="eyebrow">Commissions</p>
+          <p className="eyebrow">Services</p>
           <h2 id="services-title" className="services__title display">
             What I <em>draw</em>
           </h2>
@@ -273,7 +273,7 @@ export function Services() {
           {/* wrapper takes the entrance tween — .btn has its own CSS transform transition */}
           <span className="services__foot-cta">
             <TLink to="/contact" className="btn">
-              Start a commission <ArrowRight size={18} aria-hidden="true" />
+              Work with me <ArrowRight size={18} aria-hidden="true" />
             </TLink>
           </span>
         </div>

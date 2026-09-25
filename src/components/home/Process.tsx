@@ -18,7 +18,7 @@ const STEPS = [
   { title: 'Delivery', text: 'Your finished piece, sent to you as a digital file.' },
 ]
 
-/** How a commission works — five steps on a line that draws itself as you scroll. */
+/** How working together works — five steps on a line that draws itself as you scroll. */
 export function Process() {
   const root = useRef<HTMLElement>(null)
 
@@ -107,7 +107,7 @@ export function Process() {
           <div>
             <p className="eyebrow process__intro">Process</p>
             <h2 id="process-title" className="display process__title">
-              How a commission <em>works</em>
+              How we work <em>together</em>
             </h2>
           </div>
           <p className="process__lede process__intro">
@@ -139,7 +139,7 @@ export function Process() {
 
         <p className="process__note">
           <Clock size={16} aria-hidden="true" />
-          Past commissions were delivered in 3–7 days.
+          Past orders were delivered in 3–7 days.
         </p>
       </div>
     </section>

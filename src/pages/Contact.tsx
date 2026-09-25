@@ -60,7 +60,7 @@ export function Contact() {
     <section ref={root} data-theme="light" className="contact container" aria-labelledby="contact-title">
       <header className="contact__head">
         <p className="eyebrow contact__eyebrow" data-reveal>
-          Commissions &amp; enquiries
+          Work with me
         </p>
         <h1 id="contact-title" className="contact__title display">
           Let’s make something <em>soft</em>.
@@ -70,8 +70,8 @@ export function Contact() {
       <div className="contact__grid">
         <aside className="contact__aside">
           <p className="contact__intro serif" data-reveal>
-            Tell me about your character — who they are, the mood you’re after, the moment you’d like to keep. Rough ideas are more than welcome; we’ll
-            shape the rest together.
+            A character, a book cover, a new profile picture or a longer project together — tell me what you have in mind. Rough ideas are more than
+            welcome; we’ll shape the rest together.
           </p>
           <p className="contact__note muted" data-reveal>
             Every piece is drawn by hand, from the first sketch to the final render. No AI.

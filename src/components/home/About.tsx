@@ -215,7 +215,7 @@ export function About() {
               {turnaround && (
                 <li className="about__fact about__reveal">
                   <span className="about__fact-k eyebrow">Turnaround</span>
-                  <span className="about__fact-v">Past commissions delivered in {turnaround}</span>
+                  <span className="about__fact-v">Past orders delivered in {turnaround}</span>
                 </li>
               )}
               <li className="about__fact about__reveal">

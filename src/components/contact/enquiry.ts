@@ -6,6 +6,7 @@ export const REQUEST_TYPES = [
   { value: 'original-character', label: 'Original character (OC)' },
   { value: 'book-cover', label: 'Book cover' },
   { value: 'pfp-icon', label: 'PFP / icon' },
+  { value: 'collaboration', label: 'Collaboration' },
   { value: 'other', label: 'Something else' },
 ] as const
 
@@ -48,7 +49,7 @@ export function validate(v: Enquiry): Errors {
   if (!v.email.trim()) e.email = 'I’ll need an email to write back to you.'
   else if (!EMAIL_RE.test(v.email.trim())) e.email = 'That email doesn’t look quite right.'
   if (v.deadline && v.deadline < todayISO()) e.deadline = 'Please choose a date that hasn’t passed yet.'
-  if (!v.message.trim()) e.message = 'A few words about your character, please.'
+  if (!v.message.trim()) e.message = 'A few words about what you have in mind, please.'
   else if (v.message.trim().length < 10) e.message = 'Just a little more — a sentence or two is perfect.'
   return e
 }
@@ -61,7 +62,7 @@ export function formatDate(iso: string) {
 
 export const subjectFor = (v: Enquiry) => {
   const t = typeLabel(v.type)
-  return t ? `Commission enquiry — ${t}` : 'Commission enquiry'
+  return t ? `Work enquiry — ${t}` : 'Work enquiry'
 }
 
 const pieceUrl = (a: Artwork) => `${window.location.origin}/work/${a.slug}`

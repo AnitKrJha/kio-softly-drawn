@@ -204,7 +204,7 @@ function PieceView({ art }: { art: Artwork }) {
 
           <div className="piece__actions piece__fade">
             <TLink to={`/contact?ref=${art.slug}`} className="btn" data-cursor="Open">
-              Commission something like this <span aria-hidden="true">→</span>
+              Order something like this <span aria-hidden="true">→</span>
             </TLink>
           </div>
         </div>

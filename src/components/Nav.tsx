@@ -14,7 +14,7 @@ import './Nav.css'
 const LINKS = [
   { to: '/work', label: 'Work' },
   { to: '/#about', label: 'About' },
-  { to: '/#commissions', label: 'Commissions' },
+  { to: '/#services', label: 'Services' },
   { to: '/contact', label: 'Contact' },
 ]
 

@@ -230,7 +230,7 @@ export function Hero() {
               </span>
               <span data-hero-in>
                 <TLink to="/contact" className="btn btn--ghost">
-                  Commission me
+                  Work with me
                 </TLink>
               </span>
             </div>
