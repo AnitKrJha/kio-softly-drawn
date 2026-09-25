@@ -1,0 +1,35 @@
+.seal {
+  position: relative;
+  display: grid;
+  place-items: center;
+  color: var(--fg);
+  flex-shrink: 0;
+}
+
+.seal__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: seal-spin 22s linear infinite;
+}
+
+.seal__ring text {
+  font-family: var(--font-body);
+  font-size: 7.4px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  fill: currentColor;
+}
+
+.seal__mark {
+  width: 26%;
+  height: 26%;
+  color: var(--candle);
+}
+
+@keyframes seal-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

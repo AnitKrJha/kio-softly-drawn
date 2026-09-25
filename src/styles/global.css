@@ -1,0 +1,379 @@
+@import '@fontsource-variable/fraunces/full.css';
+@import '@fontsource-variable/fraunces/full-italic.css';
+@import '@fontsource-variable/manrope/index.css';
+@import 'lenis/dist/lenis.css';
+
+/* ─────────────────────────────  Design tokens  ───────────────────────────── */
+:root {
+  /* palette — "candlelit atelier": warm ink, paper, candle gold, blush rose */
+  --ink: #0e0b09;
+  --ink-2: #16110e;
+  --ink-3: #221a15;
+  --paper: #f3ebe0;
+  --paper-2: #e8ddcd;
+  --paper-3: #d9ccb8;
+  --candle: #e8b86a;
+  --candle-soft: #f3d7a4;
+  --rose: #e79aa6;
+  --rose-deep: #b8566a;
+  --moss: #8fa27a;
+
+  /* theme-driven (flipped by html[data-theme]) */
+  --bg: var(--ink);
+  --fg: var(--paper);
+  --fg-muted: rgb(243 235 224 / 0.62);
+  --fg-faint: rgb(243 235 224 / 0.16);
+  --line: rgb(243 235 224 / 0.14);
+  --surface: rgb(243 235 224 / 0.04);
+
+  --font-display: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
+  --font-body: 'Manrope Variable', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* fluid type scale (360px → 1600px) */
+  --step--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.85rem);
+  --step-0: clamp(0.95rem, 0.92rem + 0.15vw, 1.06rem);
+  --step-1: clamp(1.15rem, 1.07rem + 0.35vw, 1.4rem);
+  --step-2: clamp(1.4rem, 1.22rem + 0.8vw, 2rem);
+  --step-3: clamp(1.8rem, 1.45rem + 1.6vw, 3rem);
+  --step-4: clamp(2.4rem, 1.7rem + 3.2vw, 5rem);
+  --step-5: clamp(3.2rem, 1.9rem + 6vw, 8.5rem);
+  --step-6: clamp(4.2rem, 1.8rem + 11vw, 15rem);
+
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --radius: 14px;
+  --radius-lg: 28px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --nav-h: 76px;
+  color-scheme: dark;
+}
+
+html[data-theme='light'] {
+  --bg: var(--paper);
+  --fg: var(--ink);
+  --fg-muted: rgb(14 11 9 / 0.62);
+  --fg-faint: rgb(14 11 9 / 0.14);
+  --line: rgb(14 11 9 / 0.14);
+  --surface: rgb(14 11 9 / 0.035);
+  color-scheme: light;
+}
+
+/* ─────────────────────────────  Base  ───────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  transition:
+    background-color 0.9s var(--ease-out),
+    color 0.9s var(--ease-out);
+  overflow-x: clip;
+}
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote {
+  margin: 0;
+}
+
+::selection {
+  background: var(--rose);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--candle);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ─────────────────────────────  Typography  ───────────────────────────── */
+.display {
+  font-family: var(--font-display);
+  font-weight: 340;
+  font-variation-settings:
+    'SOFT' 100,
+    'WONK' 0;
+  font-optical-sizing: auto;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+}
+
+.display em,
+.italic {
+  font-style: italic;
+  font-variation-settings:
+    'SOFT' 100,
+    'WONK' 1;
+}
+
+.serif {
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 100;
+  font-weight: 360;
+  letter-spacing: -0.015em;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.muted {
+  color: var(--fg-muted);
+}
+
+.accent {
+  color: var(--candle);
+}
+
+/* ─────────────────────────────  Layout utilities  ───────────────────────────── */
+.container {
+  width: 100%;
+  padding-inline: var(--gutter);
+  margin-inline: auto;
+  max-width: 1720px;
+}
+
+.section {
+  position: relative;
+  padding-block: clamp(5rem, 12vw, 11rem);
+}
+
+.hairline {
+  height: 1px;
+  background: var(--line);
+  border: 0;
+  margin: 0;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ─────────────────────────────  Shared UI  ───────────────────────────── */
+.btn {
+  --btn-bg: var(--fg);
+  --btn-fg: var(--bg);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.95em 1.5em;
+  border-radius: 999px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-weight: 600;
+  font-size: var(--step-0);
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform 0.5s var(--ease-out),
+    color 0.5s var(--ease-out);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--candle);
+  border-radius: inherit;
+  transform: translateY(101%);
+  transition: transform 0.6s var(--ease-out);
+}
+
+.btn:hover::before {
+  transform: translateY(0);
+}
+
+.btn:hover {
+  color: var(--ink);
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--fg);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.45em 0.9em;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--fg-muted);
+  white-space: nowrap;
+}
+
+.dot-live {
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background: #8fd18a;
+  box-shadow: 0 0 0 0 rgb(143 209 138 / 0.6);
+  animation: pulse 2.4s infinite;
+}
+
+@keyframes pulse {
+  70% {
+    box-shadow: 0 0 0 0.6em rgb(143 209 138 / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(143 209 138 / 0);
+  }
+}
+
+/* underline that draws in from the left */
+.link {
+  background: linear-gradient(currentColor, currentColor) no-repeat 100% 100% / 0 1px;
+  transition: background-size 0.6s var(--ease-out);
+}
+
+.link:hover {
+  background-position: 0 100%;
+  background-size: 100% 1px;
+}
+
+/* masked line/word reveals used by SplitText */
+.split-mask {
+  overflow: clip;
+  display: inline-block;
+  vertical-align: top;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+/* film grain over everything — sells the "paper" feel */
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: -50%;
+  z-index: 90;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 1.2s steps(6) infinite;
+}
+
+html[data-theme='light'] .grain {
+  opacity: 0.1;
+  mix-blend-mode: multiply;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -4%); }
+  60% { transform: translate(-4%, -2%); }
+  80% { transform: translate(3%, 4%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ─────────────────────────────  Page transitions  ───────────────────────────── */
+@view-transition {
+  navigation: none;
+}
+
+::view-transition-old(root) {
+  animation: vt-out 0.9s var(--ease-in-out) both;
+}
+
+::view-transition-new(root) {
+  animation: vt-in 1.05s var(--ease-in-out) both;
+}
+
+::view-transition-group(*) {
+  animation-duration: 1s;
+  animation-timing-function: var(--ease-in-out);
+}
+
+@keyframes vt-out {
+  to {
+    transform: translateY(-10vh) scale(0.97);
+    opacity: 0.25;
+    filter: blur(6px);
+  }
+}
+
+@keyframes vt-in {
+  from {
+    clip-path: inset(100% 0 0 0 round 40% 40% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .grain {
+    animation: none;
+  }
+}

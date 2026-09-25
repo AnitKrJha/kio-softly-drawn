@@ -1,0 +1,24 @@
+.art-image {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+.art-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.9s var(--ease-out);
+}
+
+.art-image.is-loaded img {
+  opacity: 1;
+}
+
+.art-image--cover {
+  position: absolute;
+  inset: 0;
+}
