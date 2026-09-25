@@ -1,0 +1,263 @@
+.handdrawn {
+  position: relative;
+}
+
+.handdrawn__pin {
+  position: relative;
+}
+
+.handdrawn__gl {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.handdrawn__gl canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.handdrawn__inner {
+  position: relative;
+  z-index: 1;
+  padding-block: clamp(5rem, 12vw, 11rem);
+}
+
+/* ── headline ── */
+.handdrawn__head {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.handdrawn__head .eyebrow {
+  margin-bottom: 1.25rem;
+}
+
+.handdrawn__title {
+  font-size: var(--step-5);
+}
+
+.handdrawn__title em {
+  color: var(--candle);
+}
+
+.handdrawn__lede {
+  max-width: 25rem;
+  font-size: var(--step-1);
+  line-height: 1.45;
+  color: var(--fg-muted);
+  text-wrap: pretty;
+}
+
+.handdrawn__lede strong {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+/* ── the drawing ── */
+.handdrawn__stage {
+  position: relative;
+  margin-block: 3.5rem 3rem;
+}
+
+@media (max-width: 899.98px) {
+  /* only reachable if a desktop window is narrowed after the WebGL pen loaded */
+  .handdrawn--gl .handdrawn__stage {
+    min-height: 14rem;
+  }
+}
+
+.handdrawn__svg {
+  position: relative;
+  width: 100%;
+  margin-inline: auto;
+}
+
+.handdrawn__svg > svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.handdrawn__guide,
+.handdrawn__glow,
+.handdrawn__ink {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.handdrawn__guide {
+  stroke: var(--fg-faint);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.6;
+}
+
+/* widths are in viewBox units — divide by the rendered scale so they stay crisp at any size */
+.handdrawn__ink {
+  stroke-width: calc(2.6px / var(--hd-scale, 1));
+}
+
+.handdrawn__glow {
+  stroke-width: calc(13px / var(--hd-scale, 1));
+  opacity: 0.16;
+}
+
+.handdrawn__nib {
+  position: absolute;
+  left: 0;
+  top: -28px;
+  width: 28px;
+  height: 28px;
+  transform-origin: 0 100%;
+  will-change: transform;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease-out);
+}
+
+.handdrawn__nib > svg {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 4px 6px rgb(0 0 0 / 0.35));
+}
+
+.handdrawn__nib-glow {
+  position: absolute;
+  left: -16px;
+  bottom: -16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 236 200 / 0.95), rgb(232 184 106 / 0.35) 38%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-out);
+}
+
+.handdrawn__nib.is-drawing .handdrawn__nib-glow {
+  opacity: 1;
+}
+
+/* ── pillars ── */
+.handdrawn__foot {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.handdrawn__pillars {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2rem;
+}
+
+.handdrawn__pillar-rule {
+  display: block;
+  height: 1px;
+  margin-bottom: 1.1rem;
+  background: linear-gradient(90deg, var(--candle), var(--line) 70%);
+  transform-origin: 0 50%;
+}
+
+.handdrawn__pillar-title {
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 100;
+  font-size: var(--step-1);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-bottom: 0.4rem;
+}
+
+.handdrawn__pillar-n {
+  font-style: italic;
+  color: var(--candle);
+  margin-right: 0.2em;
+}
+
+.handdrawn__pillar-text {
+  font-size: var(--step--1);
+  line-height: 1.55;
+  max-width: 30ch;
+}
+
+.handdrawn__seal {
+  justify-self: end;
+}
+
+@media (min-width: 600px) {
+  .handdrawn__pillars {
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.25rem, 3vw, 3rem);
+  }
+}
+
+/* ── desktop: one pinned, full-height scene ── */
+@media (min-width: 900px) {
+  .handdrawn__pin {
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+  }
+
+  .handdrawn__inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding-top: calc(var(--nav-h) + clamp(0.5rem, 3vh, 2rem));
+    padding-bottom: clamp(1.25rem, 4vh, 2.75rem);
+  }
+
+  .handdrawn__head {
+    grid-template-columns: 1fr minmax(16rem, 24rem);
+    align-items: end;
+    gap: 3rem;
+  }
+
+  .handdrawn__head .eyebrow {
+    margin-bottom: clamp(0.5rem, 2vh, 1.25rem);
+  }
+
+  .handdrawn__title {
+    font-size: min(var(--step-5), 12.5vh);
+  }
+
+  .handdrawn__lede {
+    padding-bottom: 0.6em;
+  }
+
+  .handdrawn__stage {
+    flex: 1 1 0;
+    min-height: 0;
+    margin-block: clamp(1rem, 3vh, 2.5rem);
+    container-type: size;
+    display: grid;
+    place-items: center;
+  }
+
+  .handdrawn__svg {
+    width: min(100cqw, calc(100cqh / var(--hd-aspect, 0.3)));
+  }
+
+  .handdrawn__foot {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+
+  .handdrawn__pillar-text {
+    font-size: clamp(0.78rem, 0.6rem + 0.3vw, 0.95rem);
+  }
+}
+
+@media (min-width: 900px) and (max-height: 700px) {
+  .handdrawn__pillar-text {
+    display: none;
+  }
+  .handdrawn__seal {
+    width: 84px !important;
+    height: 84px !important;
+  }
+}

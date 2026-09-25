@@ -26,6 +26,8 @@ export function scrollToTarget(target: string | HTMLElement) {
 
 export function SmoothScroll({ children }: { children: ReactNode }) {
   useLayoutEffect(() => {
+    // Web fonts change text metrics, which shifts every trigger below the fold.
+    document.fonts?.ready.then(() => ScrollTrigger.refresh())
     if (prefersReducedMotion()) return
     // Touch devices keep native momentum scrolling — it already feels right there.
     lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.95 })

@@ -1,0 +1,184 @@
+/* ───────── Gallery grid — absolutely positioned, pure-CSS masonry ───────── */
+.ggrid {
+  container-type: inline-size;
+  --cols: 1;
+  --gap: clamp(1.1rem, 2.4vw, 2.5rem);
+  --drop: 0px;
+  /* caption: title line + meta line, fixed so the layout never shifts */
+  --cap: 4.9rem;
+}
+
+.ggrid[data-cols='2'] {
+  --cols: 2;
+  --drop: clamp(2.5rem, 9cqw, 7rem);
+}
+
+.ggrid[data-cols='3'] {
+  --cols: 3;
+  --drop: clamp(3rem, 8cqw, 9rem);
+}
+
+.ggrid__stage {
+  --colw: calc((100cqw - (var(--cols) - 1) * var(--gap)) / var(--cols));
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.gcard {
+  position: absolute;
+  width: var(--colw);
+  left: calc(var(--c) * (var(--colw) + var(--gap)));
+  top: calc(var(--colw) * var(--r) + var(--n) * (var(--cap) + var(--gap)) + var(--d) * var(--drop));
+}
+
+.gcard.is-hidden {
+  display: none;
+}
+
+.gcard__link {
+  display: block;
+  perspective: 1400px;
+  border-radius: var(--radius);
+  outline: none;
+}
+
+.gcard__tilt {
+  display: block;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.gcard__media {
+  position: relative;
+  display: block;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: 0 30px 60px -40px rgb(0 0 0 / 0.7);
+  transition: box-shadow 0.8s var(--ease-out);
+}
+
+.gcard .art-image {
+  border-radius: var(--radius);
+  transform-origin: 50% 100%;
+}
+
+.gcard .art-image img {
+  transition:
+    opacity 0.9s var(--ease-out),
+    transform 1.3s var(--ease-out);
+}
+
+/* soft candle-light sheen that tracks the cursor */
+.gcard__sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--mx, 50%) var(--my, 30%),
+    rgb(243 215 164 / 0.22),
+    transparent 55%
+  );
+  mix-blend-mode: soft-light;
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-out);
+}
+
+/* ── caption ── */
+.gcard__cap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.3rem;
+  height: var(--cap);
+  padding-top: 0.35rem;
+  overflow: hidden;
+}
+
+.gcard__title {
+  font-size: clamp(1rem, calc(var(--colw) / 17), var(--step-1));
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: transform 0.8s var(--ease-out);
+}
+
+.gcard__row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  font-size: var(--step--1);
+  color: var(--fg-muted);
+  letter-spacing: 0.02em;
+}
+
+.gcard__num {
+  font-variant-numeric: tabular-nums;
+  color: var(--candle);
+  font-weight: 600;
+}
+
+.gcard__slide {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  height: 1.6em;
+  line-height: 1.6;
+  overflow: hidden;
+}
+
+.gcard__meta {
+  display: block;
+  white-space: nowrap;
+  transition: transform 0.7s var(--ease-out);
+}
+
+.gcard__meta--hover {
+  color: var(--fg);
+}
+
+.gcard__cats {
+  margin-left: auto;
+  white-space: nowrap;
+  opacity: 0.75;
+}
+
+/* ── hover / focus ── */
+@media (hover: hover) and (pointer: fine) {
+  .gcard__link:hover .art-image img {
+    transform: scale(1.04);
+  }
+  .gcard__link:hover .gcard__sheen {
+    opacity: 1;
+  }
+  .gcard__link:hover .gcard__media {
+    box-shadow: 0 50px 80px -40px rgb(0 0 0 / 0.85);
+  }
+  .gcard__link:hover .gcard__title {
+    transform: translateX(0.35rem);
+  }
+  .gcard__link:hover .gcard__meta {
+    transform: translateY(-100%);
+  }
+}
+
+.gcard__link:focus-visible .gcard__media {
+  outline: 2px solid var(--candle);
+  outline-offset: 4px;
+}
+
+.gcard__link:focus-visible .gcard__meta {
+  transform: translateY(-100%);
+}
+
+@media (max-width: 599px) {
+  .ggrid {
+    --cap: 4.6rem;
+  }
+  .gcard__title {
+    font-size: var(--step-1);
+  }
+}

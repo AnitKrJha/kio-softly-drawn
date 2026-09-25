@@ -1,0 +1,215 @@
+/* ─────────────  About — manifesto + artist block (cream page)  ───────────── */
+.about {
+  background: transparent;
+}
+
+/* Manifesto */
+.about__intro {
+  --mf: clamp(2rem, 1.1rem + 3.9vw, 5.2rem);
+  position: relative;
+}
+
+.about__eyebrow {
+  margin-bottom: 1.4rem;
+}
+
+.about__manifesto {
+  font-size: var(--mf);
+  line-height: 1.07;
+  letter-spacing: -0.03em;
+  text-wrap: pretty;
+}
+
+.about__word {
+  /* scrubbed 0.14 → 1 by GSAP; full opacity without JS / with reduced motion */
+  opacity: 1;
+}
+
+@media (min-width: 900px) {
+  .about__eyebrow {
+    position: absolute;
+    top: calc(var(--mf) * 0.24);
+    left: 0;
+    margin: 0;
+  }
+  .about__manifesto {
+    text-indent: clamp(8rem, 16vw, 20rem);
+  }
+}
+
+/* inline artwork pills — sized in em so they scale with the type, no layout shift */
+.about__pill {
+  position: relative;
+  display: inline-block;
+  width: 1.85em;
+  height: 0.72em;
+  margin-inline: 0.02em;
+  vertical-align: -0.02em;
+  text-indent: 0;
+}
+
+.about__pill-clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 999px;
+  isolation: isolate;
+}
+
+.about__pill-img {
+  position: absolute;
+  inset: 0;
+}
+
+.about__pill .art-image img {
+  object-position: var(--fx, 50%) var(--fy, 50%);
+}
+
+/* Two-column body */
+.about__body {
+  display: grid;
+  gap: clamp(3rem, 9vw, 5rem);
+  margin-top: clamp(5rem, 12vw, 11rem);
+}
+
+.about__figure {
+  width: 100%;
+  max-width: 30rem;
+}
+
+.about__frame {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius);
+}
+
+.about__frame-clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.about__frame-inner {
+  /* 18% taller than the frame so the parallax drift never reveals an edge */
+  position: absolute;
+  inset: -9% 0;
+}
+
+.about__frame .art-image {
+  transition: transform 1.4s var(--ease-out);
+}
+
+.about__frame:hover .art-image {
+  transform: scale(1.04);
+}
+
+.about__caption {
+  margin-top: 0.9rem;
+  font-size: var(--step--1);
+  letter-spacing: 0.01em;
+}
+
+.about__caption em {
+  font-size: var(--step-0);
+}
+
+.about__lead {
+  margin-top: 1.4rem;
+  font-size: var(--step-3);
+  line-height: 1.16;
+  max-width: 24ch;
+  text-wrap: pretty;
+}
+
+.about__para {
+  margin-top: 1.5rem;
+  max-width: 44ch;
+}
+
+.about__facts {
+  list-style: none;
+  margin: clamp(2.25rem, 5vw, 3rem) 0 0;
+  padding: 0;
+  max-width: 36rem;
+}
+
+.about__fact {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: baseline;
+  padding-block: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.about__fact:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.about__fact-k {
+  font-size: 0.7rem;
+}
+
+.about__fact-v {
+  font-weight: 500;
+}
+
+.about__fact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  /* comfortable touch target without changing the row rhythm */
+  min-height: 44px;
+  margin-block: -12px;
+}
+
+.about__fact-link svg {
+  transition: transform 0.5s var(--ease-out);
+}
+
+.about__fact-link:hover svg {
+  transform: translate(2px, -2px);
+}
+
+.about__fact-sub {
+  display: block;
+  font-size: var(--step--1);
+  font-weight: 400;
+}
+
+.about__elsewhere {
+  margin-top: clamp(2.25rem, 5vw, 3rem);
+}
+
+.about__socials {
+  margin-top: 0.9rem !important;
+}
+
+.about__socials .socials__link {
+  min-height: 44px;
+}
+
+@media (min-width: 900px) {
+  .about__body {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gutter);
+    align-items: end;
+  }
+  .about__figure {
+    grid-column: 1 / span 5;
+    max-width: none;
+  }
+  .about__text {
+    grid-column: 7 / span 6;
+    padding-bottom: 2.4rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .about__text {
+    grid-column: 7 / span 5;
+  }
+}

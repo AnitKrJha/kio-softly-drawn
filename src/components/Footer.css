@@ -1,0 +1,210 @@
+/* The footer keeps its own dark palette on every page, whatever the section theme above it. */
+.footer {
+  --bg: var(--ink);
+  --fg: var(--paper);
+  --fg-muted: rgb(243 235 224 / 0.62);
+  --fg-faint: rgb(243 235 224 / 0.16);
+  --line: rgb(243 235 224 / 0.14);
+  --surface: rgb(243 235 224 / 0.04);
+  color-scheme: dark;
+  position: relative;
+  background: var(--ink);
+  color: var(--paper);
+  border-top: 1px solid var(--line);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding-top: clamp(4rem, 9vw, 8rem);
+  padding-bottom: clamp(1rem, 2vw, 1.5rem);
+  overflow: clip;
+}
+
+.footer ::selection {
+  background: var(--rose);
+  color: var(--ink);
+}
+
+/* ── columns ── */
+.footer__top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem 2rem;
+}
+
+.footer__intro {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.footer__tagline {
+  font-size: var(--step-2);
+  line-height: 1.2;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+
+.footer__col h2 {
+  margin-bottom: 0.75rem;
+}
+
+.footer__col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+}
+
+.footer__col li a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  min-height: 44px;
+  font-size: var(--step-1);
+}
+
+.footer__col li a svg {
+  color: var(--fg-muted);
+  transition: transform 0.5s var(--ease-out);
+}
+
+.footer__col li a:hover svg {
+  transform: translate(2px, -2px);
+}
+
+.footer__col a[aria-current='page'] {
+  color: var(--candle);
+}
+
+.footer__sub {
+  margin-left: 0.35em;
+  font-size: var(--step--1);
+  color: var(--fg-muted);
+}
+
+.footer__note {
+  max-width: 24ch;
+  font-size: var(--step-1);
+  line-height: 1.45;
+  color: var(--fg-muted);
+}
+
+.footer__note a,
+.footer__email {
+  color: var(--fg);
+}
+
+.footer__email {
+  font-size: var(--step-1);
+  overflow-wrap: anywhere;
+}
+
+.footer__cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 0.75rem;
+  font-weight: 600;
+  color: var(--candle);
+}
+
+.footer__top .footer__col:last-child {
+  grid-column: 1 / -1;
+}
+
+/* ── wordmark ── */
+.footer__mark {
+  margin-top: clamp(4rem, 10vw, 9rem);
+}
+
+.footer__word {
+  width: max-content;
+  white-space: nowrap;
+  font-size: 15vw; /* replaced by the measured fit */
+  line-height: 0.82;
+  color: var(--paper);
+}
+
+/* each word is its own mask; the negative margins cancel the padding so measuring stays exact */
+.footer__w {
+  display: inline-block;
+  overflow: clip;
+  padding: 0.04em 0.07em 0.16em;
+  margin: -0.04em -0.07em -0.16em;
+}
+
+.footer__w--em {
+  font-style: italic;
+  font-variation-settings:
+    'SOFT' 100,
+    'WONK' 1;
+  color: var(--candle);
+}
+
+.footer__char {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* ── bottom bar ── */
+.footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+  font-size: var(--step--1);
+  color: var(--fg-muted);
+}
+
+.footer__legal {
+  max-width: 62ch;
+  line-height: 1.55;
+}
+
+.footer__totop {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  min-height: 44px;
+  padding: 0 1.15em;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--line);
+  color: var(--fg);
+  font-size: var(--step--1);
+  font-weight: 600;
+  transition:
+    background-color 0.5s var(--ease-out),
+    color 0.5s var(--ease-out);
+}
+
+.footer__totop svg {
+  transition: transform 0.5s var(--ease-out);
+}
+
+.footer__totop:hover {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.footer__totop:hover svg {
+  transform: translateY(-3px);
+}
+
+@media (min-width: 900px) {
+  .footer__top {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.3fr);
+  }
+
+  .footer__intro {
+    grid-column: auto;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer__top .footer__col:last-child {
+    grid-column: auto;
+  }
+}

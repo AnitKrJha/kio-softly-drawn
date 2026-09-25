@@ -1,0 +1,608 @@
+/* ───────────────────────── Hero ─────────────────────────
+ * Stacking: .hero isolates; glow → GL stage → scrim → overlay all share that one context, so the
+ * GL title's `mix-blend-mode: difference` sees the canvas. Nothing between the title and .hero may
+ * create a stacking context (no transform/opacity/z-index on .hero__overlay or .hero__main).
+ */
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 640px;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--fg);
+}
+
+/* static candle glow — the whole backdrop on phones, the loading state under the canvas on desktop */
+.hero__glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(55% 42% at 50% 40%, color-mix(in srgb, var(--candle) 15%, transparent), transparent 72%),
+    radial-gradient(50% 40% at 18% 80%, color-mix(in srgb, var(--rose-deep) 16%, transparent), transparent 70%),
+    radial-gradient(38% 32% at 88% 14%, color-mix(in srgb, var(--candle) 7%, transparent), transparent 70%);
+}
+
+/* a slow, irregular flicker — opacity only */
+.hero__glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(30% 24% at 50% 38%, color-mix(in srgb, var(--candle-soft) 12%, transparent), transparent 70%);
+  animation: hero-flicker 6.5s ease-in-out infinite;
+}
+
+@keyframes hero-flicker {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  18% {
+    opacity: 0.9;
+  }
+  31% {
+    opacity: 0.7;
+  }
+  47% {
+    opacity: 1;
+  }
+  63% {
+    opacity: 0.62;
+  }
+  80% {
+    opacity: 0.85;
+  }
+}
+
+.hero__stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero__stage canvas {
+  opacity: 0;
+  transition: opacity 1.6s var(--ease-out);
+}
+
+.hero__stage.is-live canvas {
+  opacity: 1;
+}
+
+/* once the canvas is up, the CSS glow underneath is invisible — stop its flicker */
+.hero--gl:has(.hero__stage.is-live) .hero__glow {
+  visibility: hidden;
+  transition: visibility 0s 1.6s;
+}
+
+/* bottom scrim keeps the small print legible over bright artwork */
+.hero__scrim {
+  position: absolute;
+  inset: auto 0 0;
+  height: 62%;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--ink) 86%, transparent),
+    color-mix(in srgb, var(--ink) 45%, transparent) 42%,
+    transparent
+  );
+}
+
+/* ── overlay ── */
+.hero__overlay {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: calc(var(--nav-h) + env(safe-area-inset-top) + clamp(0.5rem, 2vh, 1.5rem));
+  padding-bottom: calc(clamp(1rem, 3vh, 1.75rem) + env(safe-area-inset-bottom));
+  pointer-events: none;
+}
+
+.hero__overlay :is(a, button) {
+  pointer-events: auto;
+}
+
+.hero--gl .hero__overlay {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.hero__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.hero__hint {
+  font-size: var(--step--1);
+  letter-spacing: 0.04em;
+  color: var(--fg-muted);
+}
+
+.hero__main {
+  position: relative; /* paints above the (positioned) fallback deck; no z-index on purpose */
+  margin-top: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: clamp(1.5rem, 4vw, 4rem);
+}
+
+/* ── title ── */
+.hero__title {
+  font-size: var(--step-6);
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  margin-left: -0.04em; /* optical alignment of the S with the gutter */
+}
+
+.hero--gl .hero__title {
+  color: var(--paper);
+  mix-blend-mode: difference;
+}
+
+/* line masks with breathing room so italic overhang and descenders never clip */
+.hero__line {
+  display: block;
+  overflow: clip;
+  padding: 0.08em 0.16em 0.14em;
+  margin: -0.08em -0.16em -0.14em;
+}
+
+.hero__line-inner {
+  display: inline-block;
+}
+
+.hero__line--2 .hero__line-inner {
+  margin-left: 0.62em;
+}
+
+.hero__char {
+  will-change: transform;
+}
+
+/* ── aside: intro + CTAs ── */
+.hero__aside {
+  width: clamp(17rem, 26vw, 26rem);
+  display: grid;
+  gap: 1.5rem;
+  padding-bottom: 0.9em;
+}
+
+.hero__intro {
+  max-width: 30ch;
+  font-size: var(--step-1);
+  line-height: 1.45;
+  text-wrap: balance;
+}
+
+.hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.hero__ctas > span,
+.hero__meta span[data-hero-in] {
+  display: inline-flex;
+}
+
+/* ── meta row ── */
+.hero__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: clamp(1.5rem, 4.5vh, 3rem);
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--line);
+}
+
+.hero__meta-start,
+.hero__meta-end {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.75rem);
+}
+
+.hero__status {
+  color: var(--fg);
+  min-height: 34px;
+  transition: border-color 0.4s var(--ease-out);
+}
+
+.hero__status:hover {
+  border-color: color-mix(in srgb, var(--candle) 65%, transparent);
+}
+
+.hero__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  min-height: 44px;
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--fg-muted);
+  transition: color 0.4s var(--ease-out);
+}
+
+.hero__rating:hover {
+  color: var(--fg);
+}
+
+.hero__star {
+  color: var(--candle);
+}
+
+.hero__seal {
+  color: var(--fg);
+}
+
+.hero__scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-height: 44px;
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  transition: color 0.4s var(--ease-out);
+}
+
+.hero__scroll:hover {
+  color: var(--fg);
+}
+
+.hero__scroll-line {
+  position: relative;
+  width: 1px;
+  height: 44px;
+  overflow: hidden;
+  background: var(--line);
+}
+
+.hero__scroll-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--fg);
+  transform: translateY(-100%);
+  animation: hero-scroll 2.4s var(--ease-in-out) infinite;
+}
+
+@keyframes hero-scroll {
+  0% {
+    transform: translateY(-100%);
+  }
+  55% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* ── floating caption (GL hover) ── */
+.hero__caption {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 70;
+  pointer-events: none;
+}
+
+.hero__caption-card {
+  position: absolute;
+  left: 58px; /* clears the cursor's 88px label disc */
+  top: 14px;
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.65rem 0.95rem 0.7rem;
+  border-radius: 12px;
+  white-space: nowrap;
+  color: var(--paper);
+  background: color-mix(in srgb, var(--ink) 74%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--paper) 10%, transparent);
+  clip-path: inset(0 0 100% 0 round 12px);
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    clip-path 0.55s var(--ease-out),
+    opacity 0.35s var(--ease-out),
+    transform 0.55s var(--ease-out);
+}
+
+.hero__caption.is-on .hero__caption-card {
+  clip-path: inset(0 0 0 0 round 12px);
+  opacity: 1;
+  transform: none;
+}
+
+.hero__caption-title {
+  font-size: var(--step-1);
+  font-style: italic;
+  line-height: 1.15;
+}
+
+.hero__caption-meta {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--paper) 62%, transparent);
+}
+
+/* ───────────────────────── Fallback deck ───────────────────────── */
+.hero__deck-slot {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 250px;
+  max-height: 460px;
+  margin: 1rem 0 -0.75rem;
+}
+
+.hero-deck {
+  --t0: translate3d(0, 0, 0) rotate(-1.5deg);
+  --t1: translate3d(-25%, 3%, 0) rotate(-9deg) scale(0.9);
+  --t2: translate3d(25%, 4%, 0) rotate(8deg) scale(0.88);
+  --t3: translate3d(0, -7%, 0) rotate(2deg) scale(0.8);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-deck__enter,
+.hero-deck__float {
+  position: relative;
+  height: 100%;
+  aspect-ratio: 4 / 5;
+  max-width: 64vw;
+}
+
+.hero-deck__float {
+  animation: hero-float 7s ease-in-out infinite;
+}
+
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translate3d(0, -6px, 0) rotate(-0.4deg);
+  }
+  50% {
+    transform: translate3d(0, 8px, 0) rotate(0.5deg);
+  }
+}
+
+.hero-deck__cards {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero-card {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  transform: var(--t3);
+  transition: transform 1.15s var(--ease-out);
+}
+
+.hero-card[data-pos='0'] {
+  z-index: 4;
+  transform: var(--t0);
+}
+
+.hero-card[data-pos='1'] {
+  z-index: 3;
+  transform: var(--t1);
+}
+
+.hero-card[data-pos='2'] {
+  z-index: 2;
+  transform: var(--t2);
+}
+
+/* the front card dips, slips under the deck and settles at the back.
+   (transform transitions are switched off here: transitions outrank animations in the cascade) */
+.hero-card.is-tucking {
+  transition-property: none;
+  animation: hero-tuck 1.25s var(--ease-in-out) both;
+}
+
+@keyframes hero-tuck {
+  0% {
+    transform: var(--t0);
+    z-index: 5;
+  }
+  42% {
+    transform: translate3d(0, 16%, 0) rotate(-5deg) scale(0.94);
+    z-index: 5;
+  }
+  43% {
+    z-index: 0;
+  }
+  100% {
+    transform: var(--t3);
+    z-index: 0;
+  }
+}
+
+.hero-card__link {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius);
+  box-shadow:
+    0 30px 60px -24px rgb(0 0 0 / 0.65),
+    0 0 0 1px color-mix(in srgb, var(--paper) 8%, transparent);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* cards behind the front one sink into shadow */
+.hero-card__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  opacity: 0.42;
+  transition: opacity 0.9s var(--ease-out);
+}
+
+.hero-card[data-pos='0'] .hero-card__link::after {
+  opacity: 0;
+}
+
+.hero-card__caption {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 2.75rem 0.9rem 0.8rem;
+  color: var(--paper);
+  background: linear-gradient(transparent, color-mix(in srgb, var(--ink) 78%, transparent));
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-out);
+}
+
+.hero-card[data-pos='0'] .hero-card__caption {
+  opacity: 1;
+  transition-delay: 0.45s;
+}
+
+.hero-card__title {
+  overflow: hidden;
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.hero-card__kind {
+  flex-shrink: 0;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--paper) 65%, transparent);
+}
+
+.hero-deck__seal {
+  position: absolute;
+  top: -5%;
+  right: -16%;
+  z-index: 6;
+  color: var(--fg);
+}
+
+/* desktop without WebGL (reduced motion, low memory…): deck sits to the right of the type */
+@media (min-width: 900px) {
+  .hero--fallback .hero__deck-slot {
+    position: absolute;
+    top: calc(var(--nav-h) + 2.5rem);
+    bottom: 7.5rem;
+    right: var(--gutter);
+    width: min(38vw, 640px);
+    min-height: 0;
+    max-height: none;
+    margin: 0;
+  }
+
+  .hero--fallback .hero-deck__enter,
+  .hero--fallback .hero-deck__float {
+    height: min(100%, 34vw);
+  }
+
+  .hero--fallback .hero__main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero--fallback .hero__aside {
+    width: min(30rem, 48vw);
+  }
+}
+
+/* ───────────────────────── Responsive ───────────────────────── */
+@media (max-width: 1099.98px) {
+  .hero__main {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+  .hero__aside {
+    width: min(30rem, 100%);
+    padding-bottom: 0;
+  }
+}
+
+@media (max-width: 899.98px) {
+  .hero {
+    height: auto;
+    min-height: max(100svh, 620px);
+  }
+
+  .hero__overlay {
+    min-height: max(100svh, 620px);
+  }
+
+  .hero__hint,
+  .hero__meta span.hero__seal-wrap,
+  .hero__meta span.hero__scroll-wrap {
+    display: none;
+  }
+
+  .hero__main {
+    gap: 1.1rem;
+  }
+
+  .hero__aside {
+    gap: 1.1rem;
+  }
+
+  .hero__intro {
+    max-width: 34ch;
+    font-size: var(--step-0);
+    line-height: 1.55;
+  }
+
+  .hero__meta {
+    margin-top: 1.25rem;
+    padding-top: 0.5rem;
+  }
+
+  .hero__scrim {
+    height: 58%;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero__ctas .btn {
+    padding-inline: 1.2em;
+  }
+  .hero__meta-start {
+    gap: 0.6rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__glow::after,
+  .hero-deck__float,
+  .hero__scroll-line::after {
+    animation: none;
+  }
+}

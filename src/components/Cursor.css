@@ -1,0 +1,128 @@
+/* native cursor off while the custom one is active — except where typing happens */
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
+
+html.has-cursor :is(input, textarea, [contenteditable='']),
+html.has-cursor :is(input, textarea, [contenteditable='true']) {
+  cursor: text !important;
+}
+
+html.has-cursor select,
+html.has-cursor :is(input[type='checkbox'], input[type='radio'], input[type='range'], input[type='file'], input[type='submit']) {
+  cursor: pointer !important;
+}
+
+.cursor-ring,
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 0.35s var(--ease-out),
+    scale 0.45s var(--ease-out);
+  will-change: transform;
+}
+
+.cursor-ring.is-visible,
+.cursor-dot.is-visible {
+  opacity: 1;
+}
+
+.cursor-ring[data-state='native'],
+.cursor-dot[data-state='native'] {
+  opacity: 0;
+}
+
+.cursor-ring.is-pressed {
+  scale: 0.82;
+}
+
+/* ── ring ── */
+.cursor-ring__circle,
+.cursor-ring__disc {
+  position: absolute;
+  top: 0;
+  left: 0;
+  translate: -50% -50%;
+  border-radius: 50%;
+  transition:
+    transform 0.6s var(--ease-out),
+    opacity 0.4s var(--ease-out),
+    background-color 0.4s var(--ease-out),
+    border-color 0.9s var(--ease-out);
+}
+
+.cursor-ring__circle {
+  width: 40px;
+  height: 40px;
+  border: 1px solid color-mix(in srgb, var(--fg) 45%, transparent);
+}
+
+.cursor-ring[data-state='link'] .cursor-ring__circle {
+  transform: scale(0.6);
+  border-color: color-mix(in srgb, var(--fg) 70%, transparent);
+  background-color: color-mix(in srgb, var(--fg) 12%, transparent);
+}
+
+.cursor-ring[data-state='label'] .cursor-ring__circle {
+  transform: scale(1.6);
+  opacity: 0;
+}
+
+.cursor-ring__disc {
+  display: grid;
+  place-items: center;
+  width: 88px;
+  height: 88px;
+  background: var(--candle);
+  color: var(--ink);
+  transform: scale(0.2);
+  opacity: 0;
+}
+
+.cursor-ring[data-state='label'] .cursor-ring__disc {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.cursor-ring__label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ── dot (difference-blended so it reads on ink, paper and artwork alike) ── */
+.cursor-dot {
+  mix-blend-mode: difference;
+}
+
+.cursor-dot::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: var(--paper);
+  transition: transform 0.45s var(--ease-out);
+}
+
+.cursor-dot[data-state='link']::before {
+  transform: scale(1.35);
+}
+
+.cursor-dot[data-state='label']::before {
+  transform: scale(0);
+}

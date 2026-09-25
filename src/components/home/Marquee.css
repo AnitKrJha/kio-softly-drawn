@@ -1,0 +1,80 @@
+.marquee {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(1.1rem, 2.6vw, 2.25rem);
+  border-block: 1px solid var(--line);
+  transition: border-color 0.9s var(--ease-out);
+  contain: paint;
+}
+
+.marquee__row {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee__track {
+  display: flex;
+  flex-shrink: 0;
+  will-change: transform;
+}
+
+.marquee__group {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.marquee__item {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* row A — big Fraunces italic */
+.marquee__row--a .marquee__item {
+  gap: 0.42em;
+  padding-right: 0.42em;
+  font-family: var(--font-display);
+  font-size: var(--step-4);
+  font-style: italic;
+  font-weight: 330;
+  font-variation-settings:
+    'SOFT' 100,
+    'WONK' 1;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+}
+
+.marquee__row--a .marquee__star {
+  width: 0.36em;
+  height: 0.36em;
+  color: var(--candle);
+}
+
+/* row B — thin, muted caps going the other way */
+.marquee__row--b {
+  margin-top: clamp(0.4rem, 1vw, 0.8rem);
+}
+
+.marquee__row--b .marquee__item {
+  gap: 1.4em;
+  padding-right: 1.4em;
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  line-height: 2;
+}
+
+.marquee__row--b .marquee__star {
+  width: 0.7em;
+  height: 0.7em;
+  color: var(--rose);
+  opacity: 0.8;
+}
+
+.marquee__star {
+  flex-shrink: 0;
+  fill: currentColor;
+}

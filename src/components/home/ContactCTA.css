@@ -1,0 +1,166 @@
+.cta {
+  position: relative;
+  overflow: clip;
+  padding-block: clamp(6rem, 14vw, 13rem);
+}
+
+/* a soft pool of candlelight; moved with transforms only (never an animated blur) */
+.cta__glow {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  width: 85vmax;
+  height: 85vmax;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgb(232 184 106 / 0.2),
+    rgb(232 184 106 / 0.09) 35%,
+    rgb(231 154 166 / 0.05) 60%,
+    transparent 100%
+  );
+  transform: translate3d(var(--gx, 0px), var(--gy, 0px), 0) translate(-50%, -50%);
+  will-change: transform;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cta__glow {
+    animation: cta-breathe 7s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes cta-breathe {
+  from {
+    scale: 0.92;
+    opacity: 0.75;
+  }
+  to {
+    scale: 1.08;
+    opacity: 1;
+  }
+}
+
+.cta__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.cta__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75em;
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.cta__title {
+  font-size: min(var(--step-6), 16vw);
+  line-height: 0.9;
+}
+
+.cta__title em {
+  color: var(--candle);
+}
+
+.cta__row {
+  display: grid;
+  gap: 3rem;
+  margin-top: clamp(2.5rem, 6vw, 5rem);
+  align-items: center;
+}
+
+.cta__lede {
+  max-width: 30rem;
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--fg-muted);
+  margin-bottom: 2rem;
+  text-wrap: pretty;
+}
+
+.cta__socials .socials__link {
+  min-height: 44px;
+}
+
+/* generous invisible hit-area so the button "notices" the cursor before it arrives */
+.cta__magnet {
+  --pad: clamp(1rem, 3vw, 3rem);
+  padding: var(--pad);
+  margin: calc(var(--pad) * -1);
+  justify-self: start;
+}
+
+.cta__btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(9.5rem, 6.5rem + 8vw, 14rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--candle);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: var(--step-0);
+  letter-spacing: -0.01em;
+  text-align: center;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow:
+    0 0 0 1px rgb(232 184 106 / 0.35),
+    0 30px 80px -24px rgb(232 184 106 / 0.5);
+  will-change: transform;
+}
+
+.cta__btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 50%;
+  background: var(--paper);
+  transform: scale(0);
+  transition: transform 0.7s var(--ease-out);
+}
+
+.cta__btn:hover::before,
+.cta__btn:focus-visible::before {
+  transform: scale(1);
+}
+
+.cta__btn:focus-visible {
+  outline-offset: 6px;
+  border-radius: 50%;
+}
+
+.cta__btn-label {
+  display: inline-block;
+  line-height: 1.25;
+  pointer-events: none;
+}
+
+.cta__btn-label svg {
+  display: inline-block;
+  vertical-align: -0.22em;
+  margin-left: 0.1em;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.cta__btn:hover .cta__btn-label svg {
+  transform: rotate(45deg);
+}
+
+@media (min-width: 900px) {
+  .cta__title {
+    font-size: min(var(--step-6), 11.5vw);
+  }
+
+  .cta__row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: clamp(3rem, 8vw, 8rem);
+  }
+
+  .cta__magnet {
+    justify-self: end;
+  }
+}

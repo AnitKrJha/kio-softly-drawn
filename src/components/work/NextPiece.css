@@ -1,0 +1,139 @@
+/* ───────── Next piece ───────── */
+.next {
+  padding-top: clamp(2rem, 5vw, 4rem);
+  padding-bottom: clamp(4rem, 9vw, 8rem);
+}
+
+.next__link {
+  position: relative;
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.75rem);
+  padding-top: clamp(2rem, 5vw, 4rem);
+}
+
+.next__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.next__hint {
+  display: none;
+}
+
+.next__title {
+  display: block;
+  font-size: clamp(2.6rem, 1.6rem + 5.2vw, 8rem);
+  max-width: 16ch;
+  text-wrap: balance;
+}
+
+.next__reveal {
+  display: inline-block;
+}
+
+/* SplitText line masks — room for descenders */
+.next__line-mask {
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+.next__meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.next__arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px var(--line);
+  color: var(--fg);
+  font-size: 1.1rem;
+  letter-spacing: 0;
+  transition:
+    background-color 0.5s var(--ease-out),
+    color 0.5s var(--ease-out),
+    transform 0.7s var(--ease-out);
+}
+
+/* touch / narrow: the next artwork as a wide strip */
+.next__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 8;
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.next__media .art-image {
+  border-radius: var(--radius);
+}
+
+/* desktop with a mouse: the artwork un-masks on hover */
+@media (hover: hover) and (pointer: fine) and (min-width: 900px) {
+  .next__hint {
+    display: block;
+  }
+
+  .next__title {
+    max-width: min(16ch, 62%);
+  }
+
+  .next__media {
+    position: absolute;
+    right: clamp(0rem, 4vw, 5rem);
+    top: 50%;
+    width: clamp(220px, calc(24vw * max(1, min(var(--ar), 1.5))), 480px);
+    aspect-ratio: var(--ar);
+    margin: 0;
+    translate: 0 -50%;
+    rotate: 3deg;
+    pointer-events: none;
+    clip-path: inset(100% 0% 0% 0% round var(--radius));
+    transition:
+      clip-path 1s var(--ease-out),
+      rotate 1.2s var(--ease-out);
+  }
+
+  .next__media img {
+    scale: 1.2;
+    transition:
+      opacity 0.9s var(--ease-out),
+      scale 1.4s var(--ease-out);
+  }
+
+  .next__link:hover .next__media,
+  .next__link:focus-visible .next__media {
+    clip-path: inset(0% 0% 0% 0% round var(--radius));
+    rotate: -2deg;
+  }
+
+  .next__link:hover .next__media img,
+  .next__link:focus-visible .next__media img {
+    scale: 1;
+  }
+
+  .next__link:hover .next__arrow {
+    background: var(--candle);
+    color: var(--ink);
+    transform: translateX(0.4rem);
+  }
+
+  .next__title em {
+    transition: color 0.6s var(--ease-out);
+  }
+
+  .next__link:hover .next__title em {
+    color: var(--candle-soft);
+  }
+}

@@ -1,0 +1,128 @@
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 89; /* above the nav (80), below the global grain (90) so the ink panel has tooth */
+  pointer-events: auto;
+  cursor: progress;
+}
+
+.preloader__under,
+.preloader__panel {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0% 0% 0% 0%);
+  will-change: clip-path;
+}
+
+/* a second, slightly warmer sheet trails the curtain for depth */
+.preloader__under {
+  background: var(--ink-3);
+}
+
+.preloader__panel {
+  overflow: hidden;
+  background:
+    radial-gradient(60% 50% at 50% 45%, color-mix(in srgb, var(--candle) 9%, transparent), transparent 70%),
+    var(--ink);
+  color: var(--paper);
+}
+
+.preloader__inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--gutter) + env(safe-area-inset-top)) var(--gutter) calc(var(--gutter) + env(safe-area-inset-bottom));
+}
+
+.preloader__center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  text-align: center;
+}
+
+/* mask with breathing room so the italic overhang and descenders never clip */
+.preloader__mask {
+  display: block;
+  overflow: clip;
+  padding: 0.12em 0.22em 0.16em;
+  margin: -0.12em -0.22em -0.16em;
+}
+
+.preloader__word {
+  display: block;
+  font-size: clamp(6rem, 24vw, 19rem);
+  line-height: 0.9;
+  color: var(--paper);
+}
+
+.preloader__char {
+  display: inline-block;
+  will-change: transform;
+}
+
+.preloader__caption {
+  color: rgb(243 235 224 / 0.62);
+  letter-spacing: 0.2em;
+}
+
+.preloader__foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.preloader__note {
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(243 235 224 / 0.42);
+}
+
+.preloader__counter {
+  display: inline-flex;
+  align-items: flex-start;
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 100;
+  font-weight: 320;
+  font-size: var(--step-4);
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.preloader__count {
+  display: inline-block;
+  min-width: 3ch;
+  text-align: right;
+}
+
+.preloader__pct {
+  font-size: 0.35em;
+  margin-left: 0.2em;
+  margin-top: 0.3em;
+  color: var(--candle);
+}
+
+.preloader__track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: rgb(243 235 224 / 0.08);
+}
+
+.preloader__bar {
+  display: block;
+  height: 100%;
+  background: var(--candle);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}

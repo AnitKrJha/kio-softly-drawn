@@ -1,0 +1,16 @@
+{
+  "name": "Kio — Softly Drawn",
+  "short_name": "Softly Drawn",
+  "description": "Semi-realistic character art, custom designs & original characters. Hand-drawn, no AI.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#0e0b09",
+  "background_color": "#0e0b09",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

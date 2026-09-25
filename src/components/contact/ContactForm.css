@@ -1,0 +1,607 @@
+/* ─────────────────────────────  The letter  ───────────────────────────── */
+.contact-form {
+  /* legible on cream and on ink: rose-deep pulled toward the text colour */
+  --contact-error: color-mix(in oklab, var(--rose-deep) 78%, var(--fg));
+  position: relative;
+}
+
+.contact-form__letter {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.6rem, 3vw, 2.2rem);
+  padding: clamp(1.4rem, 5vw, 3.75rem) clamp(1.25rem, 5vw, 4rem) clamp(1.6rem, 5vw, 3.5rem);
+  border-radius: var(--radius-lg);
+  /* a sheet one shade brighter than whatever the page is */
+  background: color-mix(in oklab, var(--bg) 82%, white);
+  box-shadow:
+    inset 0 0 0 1px var(--line),
+    0 40px 80px -48px rgb(14 11 9 / 0.35),
+    0 12px 28px -18px rgb(14 11 9 / 0.18);
+}
+
+/* faint deckle of ruled paper in the top corner — pure decoration */
+.contact-form__letter::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(120% 60% at 100% 0%, color-mix(in oklab, var(--candle) 9%, transparent), transparent 60%);
+}
+
+.contact-form__letter > * {
+  position: relative;
+}
+
+.contact-form__salutation {
+  font-size: var(--step-3);
+  font-style: italic;
+  font-variation-settings:
+    'SOFT' 100,
+    'WONK' 1;
+  line-height: 1;
+  color: var(--fg);
+}
+
+.contact-form__row {
+  display: grid;
+  gap: clamp(1.6rem, 3vw, 2.2rem) clamp(1.5rem, 3vw, 2.5rem);
+}
+
+@media (min-width: 640px) {
+  .contact-form__row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ─────────────────────────────  Fields  ───────────────────────────── */
+.field {
+  position: relative;
+  padding-top: 1.45rem;
+}
+
+.field__label {
+  position: absolute;
+  top: calc(1.45rem + 0.6rem + 0.1em);
+  left: 0;
+  max-width: 100%;
+  font-size: var(--step-1);
+  line-height: 1.2;
+  color: var(--fg-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transform-origin: 0 0;
+  pointer-events: none;
+  transition:
+    transform 0.55s var(--ease-out),
+    color 0.35s var(--ease-out),
+    letter-spacing 0.55s var(--ease-out);
+}
+
+.field:focus-within .field__label,
+.field.is-filled .field__label,
+.field--pinned .field__label {
+  transform: translateY(-1.75rem) scale(0.7);
+  letter-spacing: 0.02em;
+}
+
+.field:focus-within .field__label {
+  color: var(--fg);
+}
+
+.field.has-error .field__label {
+  color: var(--contact-error);
+}
+
+.field__optional {
+  position: absolute;
+  top: 0.15rem;
+  right: 0;
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  opacity: 0.75;
+}
+
+.field__control {
+  display: block;
+  width: 100%;
+  min-height: 3rem;
+  margin: 0;
+  padding: 0.6rem 0 0.7rem;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+  /* ≥16px so iOS never zooms on focus */
+  font-size: max(16px, var(--step-1));
+  line-height: 1.4;
+  caret-color: var(--candle);
+  appearance: none;
+  -webkit-appearance: none;
+  scroll-margin-block: calc(var(--nav-h) + 5rem) 4rem;
+  transition: border-color 0.35s var(--ease-out);
+}
+
+.field__control:focus {
+  outline: none;
+}
+
+.field__control::placeholder {
+  color: transparent;
+}
+
+.field__control:hover {
+  border-bottom-color: var(--fg-faint);
+}
+
+textarea.field__control {
+  resize: none;
+  overflow-y: auto;
+  min-height: 3rem;
+  max-height: 60vh;
+}
+
+/* date inputs: native picker, calmed down to match the ruled line */
+.field__control[type='date'] {
+  min-width: 0;
+  text-align: left;
+  color: var(--fg);
+}
+
+.field__control[type='date']:not(:focus):invalid,
+.field:not(.is-filled) .field__control[type='date']:not(:focus) {
+  color: var(--fg-muted);
+}
+
+.field__control::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+.field__control::-webkit-calendar-picker-indicator {
+  opacity: 0.55;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.field__control::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* the underline that inks in from the left */
+.field__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  margin-top: -1.5px;
+  background: var(--candle);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition:
+    transform 0.8s var(--ease-out),
+    background-color 0.35s;
+}
+
+.field:focus-within .field__line {
+  transform: scaleX(1);
+}
+
+.field.has-error .field__line {
+  transform: scaleX(1);
+  background: var(--contact-error);
+}
+
+.field__error,
+.field__hint {
+  margin-top: 0.55rem;
+  font-size: var(--step--1);
+  line-height: 1.45;
+}
+
+.field__error {
+  color: var(--contact-error);
+  font-weight: 600;
+  animation: contact-rise 0.45s var(--ease-out) both;
+}
+
+.field__hint {
+  color: var(--fg-muted);
+}
+
+/* ─────────────────────────────  "What would you like?" chips  ───────────────────────────── */
+.contact-form__types {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.contact-form__legend {
+  padding: 0;
+  margin-bottom: 0.95rem;
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.contact-form__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.contact-chip {
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.contact-chip input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.contact-chip__face {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.55em 1.1em;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-size: var(--step-0);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--fg-muted);
+  transition:
+    background-color 0.45s var(--ease-out),
+    color 0.45s var(--ease-out),
+    box-shadow 0.45s var(--ease-out),
+    transform 0.45s var(--ease-out);
+}
+
+.contact-chip:hover .contact-chip__face {
+  color: var(--fg);
+  box-shadow: inset 0 0 0 1px var(--fg-muted);
+}
+
+.contact-chip input:checked + .contact-chip__face {
+  background: var(--fg);
+  color: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--fg);
+}
+
+.contact-chip:active .contact-chip__face {
+  transform: scale(0.97);
+}
+
+.contact-chip input:focus-visible + .contact-chip__face {
+  outline: 2px solid var(--candle);
+  outline-offset: 3px;
+}
+
+/* ─────────────────────────────  "Inspired by" artwork chip  ───────────────────────────── */
+.contact-ref {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  max-width: 100%;
+  margin-top: 1rem;
+  padding: 0.3rem 0.3rem 0.3rem 0.3rem;
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--line);
+  animation: contact-rise 0.6s var(--ease-out) both;
+}
+
+.contact-ref__thumb {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--fg-faint);
+}
+
+.contact-ref__text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+.contact-ref__title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.15em;
+  font-variation-settings:
+    'SOFT' 100,
+    'WONK' 1;
+}
+
+.contact-ref__remove {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  margin: -2px;
+  border-radius: 50%;
+  color: var(--fg-muted);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.contact-ref__remove:hover {
+  background: var(--fg-faint);
+  color: var(--fg);
+}
+
+/* ─────────────────────────────  Notices  ───────────────────────────── */
+.contact-form__notice,
+.contact-form__alert {
+  display: grid;
+  gap: 1rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: var(--radius);
+  font-size: var(--step--1);
+  line-height: 1.55;
+}
+
+.contact-form__notice {
+  background: color-mix(in oklab, var(--candle) 14%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--candle) 40%, transparent);
+}
+
+.contact-form__notice strong {
+  font-weight: 700;
+}
+
+.contact-form__alert {
+  color: var(--contact-error);
+  background: color-mix(in oklab, var(--rose) 16%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--rose-deep) 35%, transparent);
+  animation: contact-rise 0.5s var(--ease-out) both;
+}
+
+.contact-form__elsewhere {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.contact-form__elsewhere .btn {
+  min-height: 44px;
+  padding: 0.7em 1.15em;
+  font-size: var(--step--1);
+}
+
+/* ─────────────────────────────  Sign-off + submit  ───────────────────────────── */
+.contact-form__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem 2rem;
+  padding-top: clamp(0.5rem, 2vw, 1rem);
+}
+
+.contact-form__signoff {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.contact-form__signoff-label {
+  font-size: var(--step--1);
+  color: var(--fg-muted);
+}
+
+.contact-form__signature {
+  font-size: var(--step-3);
+  font-style: italic;
+  font-variation-settings:
+    'SOFT' 100,
+    'WONK' 1;
+  line-height: 1.05;
+  color: var(--fg-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.6s var(--ease-out);
+}
+
+.contact-form__signature.is-signed {
+  color: var(--fg);
+}
+
+.contact-form__submit {
+  min-height: 56px;
+  padding-inline: 1.8em;
+  flex-shrink: 0;
+}
+
+.contact-form__submit:disabled {
+  cursor: progress;
+  opacity: 0.8;
+}
+
+.contact-form__spinner {
+  animation: contact-spin 0.9s linear infinite;
+}
+
+@media (max-width: 520px) {
+  .contact-form__footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .contact-form__submit {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+/* honeypot: present in the DOM, absent everywhere else */
+.contact-form__hp {
+  position: absolute !important;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ─────────────────────────────  Thank-you card  ───────────────────────────── */
+.contact-form--done {
+  display: grid;
+  justify-items: start;
+  gap: 1.25rem;
+  padding: clamp(2rem, 6vw, 4.5rem) clamp(1.25rem, 5vw, 4rem);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--bg) 82%, white);
+  box-shadow:
+    inset 0 0 0 1px var(--line),
+    0 40px 80px -48px rgb(14 11 9 / 0.35);
+  scroll-margin-top: calc(var(--nav-h) + 2rem);
+}
+
+.contact-form__flourish {
+  width: clamp(150px, 30vw, 220px);
+  height: auto;
+  margin-bottom: 0.5rem;
+  overflow: visible;
+}
+
+.flourish__stroke {
+  fill: none;
+  stroke: color-mix(in oklab, var(--candle) 80%, var(--fg));
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: flourish-draw 1.25s cubic-bezier(0.65, 0, 0.35, 1) 0.2s forwards;
+}
+
+.flourish__stroke--swash {
+  stroke: var(--rose);
+  stroke-width: 3;
+  animation-duration: 1.4s;
+  animation-delay: 1.05s;
+}
+
+.flourish__dot {
+  fill: var(--rose);
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0);
+  animation: flourish-dot 0.6s var(--ease-out) 2.1s forwards;
+}
+
+.contact-form__done-title {
+  max-width: 18ch;
+  font-size: var(--step-4);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  animation: contact-rise 0.9s var(--ease-out) 0.35s both;
+}
+
+.contact-form__done-title:focus {
+  outline: none;
+}
+
+.contact-form__done-text {
+  max-width: 46ch;
+  font-size: var(--step-1);
+  line-height: 1.5;
+  animation: contact-rise 0.9s var(--ease-out) 0.5s both;
+}
+
+.contact-form__done-text a,
+.accent-ink {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.contact-form__note {
+  width: 100%;
+  padding: 1rem 1.1rem;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--line);
+  color: var(--fg);
+  font: inherit;
+  font-size: max(16px, var(--step--1));
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.contact-form--done .contact-form__elsewhere {
+  animation: contact-rise 0.9s var(--ease-out) 0.65s both;
+}
+
+.contact-form__done-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
+  margin-top: 0.75rem;
+  animation: contact-rise 0.9s var(--ease-out) 0.8s both;
+}
+
+.contact-form__again {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 600;
+  font-size: var(--step--1);
+  letter-spacing: 0.02em;
+}
+
+/* ─────────────────────────────  Keyframes  ───────────────────────────── */
+@keyframes flourish-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes flourish-dot {
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes contact-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@keyframes contact-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.contact-form__again:hover .link,
+.contact-form__again:focus-visible .link {
+  background-position: 0 100%;
+  background-size: 100% 1px;
+}

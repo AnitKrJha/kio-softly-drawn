@@ -4,3 +4,10 @@ dist
 .env
 .env.local
 *.log
+
+# The global gitignore excludes images — this project ships artwork, so re-include it.
+!*.png
+!*.jpg
+!*.jpeg
+!*.webp
+!*.svg

@@ -1,0 +1,190 @@
+/* ───────── Work / gallery ───────── */
+.work {
+  padding-top: calc(var(--nav-h) + clamp(2rem, 6vw, 5rem));
+  padding-bottom: clamp(4rem, 10vw, 9rem);
+}
+
+.work__head {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  margin-bottom: clamp(2.5rem, 6vw, 5rem);
+}
+
+.work__title {
+  font-size: min(var(--step-6), 21vw);
+  margin-left: -0.04em;
+}
+
+.work__nowrap {
+  white-space: nowrap;
+}
+
+.work__word {
+  display: inline-block;
+}
+
+.work__count {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 0.12em;
+  font-family: var(--font-body);
+  font-size: clamp(0.85rem, 0.7rem + 0.8vw, 1.5rem);
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--candle);
+  font-variant-numeric: tabular-nums;
+  position: relative;
+  top: 0.6em;
+}
+
+.work__bar {
+  display: grid;
+  gap: 1.5rem;
+  padding-top: clamp(0.5rem, 2vw, 1.5rem);
+}
+
+.work__intro {
+  max-width: 40ch;
+  font-size: var(--step-1);
+  line-height: 1.45;
+}
+
+.work__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+}
+
+.work__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.work__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  min-height: 44px;
+  padding: 0 1.05em;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--fg-muted);
+  white-space: nowrap;
+  transition:
+    background-color 0.5s var(--ease-out),
+    color 0.5s var(--ease-out),
+    box-shadow 0.5s var(--ease-out);
+}
+
+.work__chip-count {
+  font-size: 0.72em;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.7;
+}
+
+.work__chip:hover {
+  color: var(--fg);
+  box-shadow: inset 0 0 0 1px var(--fg-muted);
+}
+
+.work__chip.is-active {
+  background: var(--fg);
+  color: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--fg);
+}
+
+/* segmented Grid / Index toggle with a sliding pill */
+.work__views {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 4px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.work__views-pill {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  border-radius: 999px;
+  background: var(--candle);
+  transition: transform 0.7s var(--ease-out);
+}
+
+.work__views[data-view='index'] .work__views-pill {
+  transform: translateX(100%);
+}
+
+.work__view {
+  position: relative;
+  min-width: 5.5rem;
+  min-height: 40px;
+  padding: 0 1.1em;
+  border-radius: 999px;
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--fg-muted);
+  transition: color 0.5s var(--ease-out);
+}
+
+.work__view.is-active {
+  color: var(--ink);
+}
+
+.work__view:not(.is-active):hover {
+  color: var(--fg);
+}
+
+.work__body {
+  position: relative;
+}
+
+.work__note {
+  margin-top: clamp(3rem, 8vw, 6rem);
+  text-align: center;
+  font-size: var(--step-1);
+}
+
+.work__note a {
+  position: relative;
+}
+
+.work__note a::after {
+  content: '';
+  position: absolute;
+  inset: -0.7rem -0.4rem;
+}
+
+@media (min-width: 900px) {
+  .work__bar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    column-gap: var(--gutter);
+  }
+  .work__controls {
+    justify-content: flex-end;
+  }
+}
+
+@media (hover: none) {
+  .work__chip:hover {
+    color: var(--fg-muted);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .work__chip.is-active:hover {
+    color: var(--bg);
+    box-shadow: inset 0 0 0 1px var(--fg);
+  }
+}

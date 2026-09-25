@@ -1,0 +1,228 @@
+/* ───────── Lightbox — always ink, regardless of page theme ───────── */
+.lb {
+  --lb-px: clamp(0.75rem, 6.5vw, 7.5rem);
+  --lb-py: 4.75rem;
+  --lb-line: rgb(243 235 224 / 0.16);
+  position: fixed;
+  inset: 0;
+  z-index: 89; /* above nav, below the global grain (90) so the paper texture stays on */
+  color: var(--paper);
+  overscroll-behavior: contain;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lb__backdrop {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--ink) 96%, transparent);
+}
+
+.lb__viewport {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--lb-py) + env(safe-area-inset-top)) var(--lb-px) calc(var(--lb-py) + env(safe-area-inset-bottom));
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  cursor: zoom-in;
+}
+
+.lb__viewport.is-zoomed {
+  cursor: zoom-out;
+}
+
+.lb__frame {
+  position: relative;
+  flex: none;
+  width: min(100%, calc((100dvh - 2 * var(--lb-py) - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * var(--ar)));
+  aspect-ratio: var(--ar);
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 60px 120px -40px rgb(0 0 0 / 0.8);
+  will-change: transform;
+}
+
+.lb__stage {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+.lb__stage img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-out);
+  pointer-events: none;
+}
+
+.lb__stage img.is-loaded {
+  opacity: 1;
+}
+
+/* ── chrome ── */
+.lb__ui {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.lb__ui button {
+  pointer-events: auto;
+}
+
+.lb__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-inline: clamp(0.75rem, 3vw, 2.5rem);
+}
+
+.lb__bar--top {
+  top: 0;
+  height: calc(var(--lb-py) + env(safe-area-inset-top));
+  padding-top: env(safe-area-inset-top);
+}
+
+.lb__bar--bottom {
+  bottom: 0;
+  height: calc(var(--lb-py) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  justify-content: center;
+}
+
+.lb__count {
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+  color: rgb(243 235 224 / 0.6);
+  white-space: nowrap;
+}
+
+.lb__title {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--step-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.lb__btn {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: var(--paper);
+  background: rgb(243 235 224 / 0.06);
+  box-shadow: inset 0 0 0 1px var(--lb-line);
+  transition:
+    background-color 0.4s var(--ease-out),
+    color 0.4s var(--ease-out),
+    transform 0.5s var(--ease-out);
+}
+
+.lb__btn:hover {
+  background: var(--candle);
+  color: var(--ink);
+}
+
+.lb__nav {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.lb__nav--prev {
+  left: clamp(0.75rem, 2.2vw, 2.5rem);
+}
+
+.lb__nav--next {
+  right: clamp(0.75rem, 2.2vw, 2.5rem);
+}
+
+.lb__nav--prev:hover {
+  transform: translateX(-3px);
+}
+
+.lb__nav--next:hover {
+  transform: translateX(3px);
+}
+
+.lb__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  min-height: 44px;
+  padding: 0 1.1em;
+  border-radius: 999px;
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--paper);
+  box-shadow: inset 0 0 0 1px var(--lb-line);
+  white-space: nowrap;
+  transition:
+    background-color 0.4s var(--ease-out),
+    color 0.4s var(--ease-out);
+}
+
+.lb__pill:hover,
+.lb__pill--solid {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.lb__pill--solid:hover {
+  background: var(--candle);
+}
+
+.lb__hint {
+  font-size: var(--step--1);
+  color: rgb(243 235 224 / 0.5);
+  letter-spacing: 0.04em;
+}
+
+/* ── phones: arrows move into the bottom bar ── */
+@media (max-width: 700px) {
+  .lb {
+    --lb-py: 4.25rem;
+  }
+  .lb__nav {
+    top: auto;
+    translate: none;
+    bottom: calc((var(--lb-py) - 44px) / 2 + env(safe-area-inset-bottom));
+  }
+  .lb__hint {
+    display: none;
+  }
+  .lb__bar--bottom {
+    padding-inline: 4.25rem;
+    gap: 0.5rem;
+  }
+  .lb__title {
+    text-align: left;
+  }
+  .lb__pill--zoom {
+    padding: 0;
+    width: 44px;
+    justify-content: center;
+  }
+  .lb__pill--zoom span {
+    display: none;
+  }
+}

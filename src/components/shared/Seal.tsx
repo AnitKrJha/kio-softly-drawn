@@ -1,16 +1,20 @@
+import { useId } from 'react'
 import './Seal.css'
 
 /** Rotating circular "Hand-drawn · No AI" stamp. Quiet, but it's always there. */
 export function Seal({ size = 116, className = '' }: { size?: number; className?: string }) {
   const text = 'HAND-DRAWN · NO AI · EVERY LINE BY HAND · '
+  // unique per instance: several seals can share a page (a duplicate id would bind every
+  // textPath to the first one, which may sit in a display:none subtree and not render)
+  const pathId = `seal-circle-${useId().replace(/[^a-zA-Z0-9_-]/g, '')}`
   return (
     <div className={`seal ${className}`} style={{ width: size, height: size }} role="img" aria-label="Hand-drawn, no AI art">
       <svg viewBox="0 0 100 100" className="seal__ring" aria-hidden="true">
         <defs>
-          <path id="seal-circle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
+          <path id={pathId} d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
         </defs>
         <text>
-          <textPath href="#seal-circle" textLength="238">
+          <textPath href={`#${pathId}`} textLength="238">
             {text}
           </textPath>
         </text>
