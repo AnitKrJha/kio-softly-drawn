@@ -191,7 +191,7 @@ export function Hero() {
       <div className="hero__overlay container">
         <div className="hero__top">
           <p className="eyebrow hero__eyebrow" data-hero-in>
-            {site.name} — {site.role}
+            by {site.artist} — {site.role}
           </p>
           {useGL && (
             <p className="hero__hint" data-hero-in aria-hidden="true">

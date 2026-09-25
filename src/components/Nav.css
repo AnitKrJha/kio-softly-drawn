@@ -80,7 +80,8 @@
 }
 
 .nav__mark {
-  font-size: 1.85rem;
+  font-size: clamp(1.4rem, 1.1rem + 0.55vw, 1.75rem);
+  white-space: nowrap;
   line-height: 1;
   letter-spacing: -0.02em;
   transition: color 0.4s var(--ease-out);
@@ -91,6 +92,7 @@
 }
 
 .nav__sub {
+  white-space: nowrap;
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.18em;
@@ -234,6 +236,13 @@
 
 @media (max-width: 559.98px) {
   .nav__chip {
+    display: none;
+  }
+}
+
+/* the brand's 1fr column gets tight between 900px and ~1180px — drop the sub-line there */
+@media (min-width: 900px) and (max-width: 1179.98px) {
+  .nav__sub {
     display: none;
   }
 }

@@ -1,6 +1,6 @@
-# Kio — Softly Drawn
+# Softly Drawn
 
-The portfolio of **Kio**, a digital artist making semi-realistic character art, original characters, book covers and PFP icons. Every piece is hand-drawn. No AI.
+**Softly Drawn** is the portfolio studio of **Kio**, a digital artist making semi-realistic character art, original characters, book covers and PFP icons. Every piece is hand-drawn. No AI.
 
 The site is built like a small gallery. A WebGL hero, scroll-driven reveals, page transitions that morph artwork between routes, and a contact form that reads like a letter on cream paper.
 
@@ -98,4 +98,4 @@ After the first deploy, set the real domain for the absolute URLs social platfor
 
 ## Copyright
 
-All artwork on this site is © Kio (Softly Drawn). Every piece is hand-drawn, with no AI. The artwork is **not** licensed for reuse, redistribution or AI training. The code in this repository is separate from the artwork, and using the code gives you no rights to the images.
+All artwork on this site is © Softly Drawn / Kio. Every piece is hand-drawn, with no AI. The artwork is **not** licensed for reuse, redistribution or AI training. The code in this repository is separate from the artwork, and using the code gives you no rights to the images.

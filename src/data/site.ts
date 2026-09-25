@@ -1,6 +1,6 @@
 export const site = {
-  name: 'Kio',
-  studio: 'Softly Drawn',
+  brand: 'Softly Drawn',
+  artist: 'Kio',
   role: 'Digital artist',
   tagline: 'Semi-realistic character art, original characters, book covers & icons.',
   bio: [

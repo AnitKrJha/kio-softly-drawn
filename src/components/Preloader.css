@@ -55,8 +55,9 @@
 
 .preloader__word {
   display: block;
-  font-size: clamp(6rem, 24vw, 19rem);
+  font-size: clamp(3.1rem, 11.5vw, 11.5rem);
   line-height: 0.9;
+  white-space: nowrap;
   color: var(--paper);
 }
 

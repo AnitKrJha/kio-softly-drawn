@@ -108,7 +108,7 @@ export function Preloader() {
       // hold the reveal until the display face is here (capped) so no fallback glyph ever shows
       Promise.race([fontsReady(), wait(700)]).then(() => {
         if (cancelled) return
-        gsap.to(split.chars, { yPercent: 0, rotate: 0, duration: 1.3, ease: 'expo.out', stagger: 0.07 })
+        gsap.to(split.chars, { yPercent: 0, rotate: 0, duration: 1.3, ease: 'expo.out', stagger: 0.045 })
         gsap.to('.preloader__caption, .preloader__foot', { opacity: 1, y: 0, duration: 1, ease: 'power3.out', delay: 0.35, stagger: 0.08 })
       })
 
@@ -126,7 +126,7 @@ export function Preloader() {
             setActive(false)
           },
         }))
-        tl.to(split.chars, { yPercent: -115, rotate: -4, duration: 0.8, ease: 'expo.in', stagger: 0.05 }, 0.1)
+        tl.to(split.chars, { yPercent: -115, rotate: -4, duration: 0.8, ease: 'expo.in', stagger: 0.03 }, 0.1)
           .to('.preloader__caption, .preloader__foot', { opacity: 0, y: -12, duration: 0.5, ease: 'power2.in', stagger: 0.05 }, 0)
           .to('.preloader__panel', { clipPath: 'inset(0% 0% 100% 0%)', duration: 1.15, ease: 'expo.inOut' }, 0.6)
           .to('.preloader__inner', { yPercent: -22, duration: 1.15, ease: 'expo.inOut' }, 0.6)
@@ -169,10 +169,10 @@ export function Preloader() {
           <div className="preloader__center">
             <span className="preloader__mask">
               <span className="preloader__word display">
-                <em>{site.name}</em>
+                Softly <em>Drawn</em>
               </span>
             </span>
-            <p className="preloader__caption eyebrow">{site.studio} — hand-drawn character art</p>
+            <p className="preloader__caption eyebrow">by {site.artist} — hand-drawn character art</p>
           </div>
           <div className="preloader__foot">
             <span className="preloader__note">Every line by hand</span>

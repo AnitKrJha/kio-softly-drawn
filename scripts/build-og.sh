@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
-cd "$(dirname "$0")/.."
-ART=public/art
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+ART="$ROOT/public/art"
+WORK="$(mktemp -d)"
+trap 'rm -rf "$WORK"' EXIT
+cd "$WORK"
 NY=/System/Library/Fonts/NewYork.ttf
 NYI=/System/Library/Fonts/NewYorkItalic.ttf
 IOWAN="/System/Library/Fonts/Supplemental/Iowan Old Style.ttc"
@@ -30,14 +33,14 @@ done
 
 magick bg.png \
   f1-s.png f2-s.png f3-s.png f4-s.png -background none -layers flatten \
-  -font "$NY" -fill '#f3ebe0' -pointsize 148 -kerning -3 -annotate +62+268 'Kio' \
-  -fill '#f3ebe0' -draw 'rectangle 282,214 344,218' \
-  -font "$NYI" -fill '#e8b86a' -pointsize 84 -kerning -1 -annotate +64+370 'Softly Drawn' \
-  -font "$IOWAN" -fill 'rgba(243,235,224,0.72)' -pointsize 25 -kerning 0.2 -annotate +66+448 'Semi-realistic character art · Hand-drawn, no AI' \
+  -font "$NY" -fill '#f3ebe0' -pointsize 132 -kerning -3 -annotate +58+214 'Softly' \
+  -font "$NYI" -fill '#e8b86a' -pointsize 132 -kerning -3 -annotate +62+338 'Drawn' \
+  -font "$IOWAN" -fill 'rgba(243,235,224,0.86)' -pointsize 30 -kerning 0.4 -annotate +66+402 'by Kio' \
+  -font "$IOWAN" -fill 'rgba(243,235,224,0.72)' -pointsize 24 -kerning 0.2 -annotate +66+466 'Character art · OCs · Book covers · PFP icons' \
   -fill 'rgba(243,235,224,0.14)' -draw 'rectangle 66,500 146,501' \
-  -font "$IOWAN" -fill 'rgba(243,235,224,0.5)' -pointsize 19 -annotate +66+540 'Threads @softlydrawn_  ·  Fiverr ethereallogo' \
+  -font "$IOWAN" -fill 'rgba(243,235,224,0.5)' -pointsize 19 -annotate +66+540 'Hand-drawn, no AI  ·  Threads @softlydrawn_' \
   og-raw.png
 
 # a whisper of grain so the gradients don't band
 magick og-raw.png \( -size ${W}x${H} xc:gray50 -attenuate 0.6 +noise Gaussian -colorspace gray -set colorspace sRGB -type TrueColor \) \
-  -compose blend -define compose:args=5 -composite -type TrueColor -strip -sampling-factor 4:2:0 -quality 84 -interlace JPEG og.jpg
+  -compose blend -define compose:args=5 -composite -type TrueColor -strip -sampling-factor 4:2:0 -quality 84 -interlace JPEG "$ROOT/public/og.jpg"

@@ -9,7 +9,7 @@ import { site } from '../data/site'
 import { Seal } from './shared/Seal'
 import './Footer.css'
 
-const WORDMARK = site.studio // "Softly Drawn"
+const WORDMARK = site.brand
 
 // TODO(kio): confirm usage wording
 const LEGAL = 'All artwork hand-drawn by Kio — please don’t repost, trace or use it to train AI without permission.'
@@ -173,7 +173,7 @@ export function Footer() {
 
         <div className="footer__bottom">
           <p className="footer__legal">
-            © {year} {site.name}. {LEGAL}
+            © {year} {site.brand} · {site.artist}. {LEGAL}
           </p>
           <a className="footer__credit" href={site.credit.url} target="_blank" rel="noreferrer" data-cursor="Open">
             Website designed with <Heart size={13} aria-label="love" className="footer__heart" /> by{' '}

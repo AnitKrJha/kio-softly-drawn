@@ -153,11 +153,11 @@ export function Nav() {
     <>
       <header ref={header} className={cls}>
         <div className="nav__bar container">
-          <TLink to="/" className="nav__brand" aria-label={`${site.name} — ${site.studio}, home`} onClick={() => open && onMenuLink('/')}>
+          <TLink to="/" className="nav__brand" aria-label={`${site.brand} by ${site.artist}, home`} onClick={() => open && onMenuLink('/')}>
             <span className="nav__mark display">
-              <em>{site.name}</em>
+              Softly <em>Drawn</em>
             </span>
-            <span className="nav__sub">softly drawn</span>
+            <span className="nav__sub">by {site.artist}</span>
           </TLink>
 
           <nav className="nav__links" aria-label="Primary">
