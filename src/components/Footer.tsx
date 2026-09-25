@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from 'react'
 import { useLocation } from 'react-router'
 import gsap from 'gsap'
-import { ArrowUp, ArrowUpRight } from 'lucide-react'
+import { ArrowUp, ArrowUpRight, Heart } from 'lucide-react'
 import { TLink } from '../lib/transition'
 import { getLenis } from '../lib/scroll'
 import { prefersReducedMotion } from '../lib/env'
@@ -175,6 +175,10 @@ export function Footer() {
           <p className="footer__legal">
             © {year} {site.name}. {LEGAL}
           </p>
+          <a className="footer__credit" href={site.credit.url} target="_blank" rel="noreferrer" data-cursor="Open">
+            Website designed with <Heart size={13} aria-label="love" className="footer__heart" /> by{' '}
+            <span className="link">{site.credit.label}</span>
+          </a>
           <button type="button" className="footer__totop" onClick={toTop}>
             Back to top <ArrowUp size={16} aria-hidden="true" />
           </button>

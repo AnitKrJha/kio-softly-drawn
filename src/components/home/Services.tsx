@@ -11,7 +11,7 @@ import './Services.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-type ServiceType = 'character-art' | 'custom-design' | 'original-character' | 'couple-scene'
+type ServiceType = 'character-art' | 'original-character' | 'book-cover' | 'pfp-icon'
 
 interface Service {
   type: ServiceType
@@ -21,19 +21,13 @@ interface Service {
   arts: string[]
 }
 
+// Artworks here are style references for each service, not claims about what they were made for.
 const SERVICES: Service[] = [
   {
     type: 'character-art',
     title: ['Character', 'art'],
     desc: 'Semi-realistic portraits and full-body pieces of your characters, drawn with soft light and natural, living expressions.',
-    arts: ['hush', 'candlelit-library'],
-  },
-  {
-    type: 'custom-design',
-    title: ['Custom', 'designs'],
-    desc: "Bring me an idea, a mood or a handful of references, and I'll shape it into something that's entirely yours.",
-    // TODO(kio): confirm which pieces best represent custom-design work.
-    arts: ['witch-knight', 'forest-centaur'],
+    arts: ['witch-knight', 'rose-garden'],
   },
   {
     type: 'original-character',
@@ -43,10 +37,17 @@ const SERVICES: Service[] = [
     arts: ['vows-in-bloom'],
   },
   {
-    type: 'couple-scene',
-    title: ['Couples &', 'scenes'],
-    desc: 'Two characters, one moment — a wedding portrait, a quiet embrace on a path of fallen petals. Drawn softly, with room for the story.',
-    arts: ['vows-in-bloom', 'rose-garden'],
+    type: 'book-cover',
+    title: ['Book', 'covers'],
+    desc: 'Cover art for your story — your characters front and centre, composed with room for the title to breathe.',
+    // TODO(kio): swap in real cover commissions once they can be shown.
+    arts: ['forest-centaur', 'candlelit-library'],
+  },
+  {
+    type: 'pfp-icon',
+    title: ['PFP &', 'icons'],
+    desc: 'A portrait made to be seen small — profile pictures and icons for your socials, streams or community, clear at any size.',
+    arts: ['hush'],
   },
 ]
 

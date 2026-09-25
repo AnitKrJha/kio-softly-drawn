@@ -6,7 +6,7 @@ import './Marquee.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const ROW_A = ['Character art', 'Custom designs', 'Original characters', 'Hand-drawn, no AI']
+const ROW_A = ['Character art', 'Original characters', 'Book covers', 'PFP & icons', 'Hand-drawn, no AI']
 // from Kio's own words: "soft and detailed visuals … natural expressions and clean rendering"
 const ROW_B = ['Semi-realistic', 'Soft & detailed', 'Natural expressions', 'Clean rendering']
 

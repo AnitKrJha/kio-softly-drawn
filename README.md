@@ -1,6 +1,6 @@
 # Kio — Softly Drawn
 
-The portfolio of **Kio**, a digital artist making semi-realistic character art, custom designs and original characters. Every piece is hand-drawn. No AI.
+The portfolio of **Kio**, a digital artist making semi-realistic character art, original characters, book covers and PFP icons. Every piece is hand-drawn. No AI.
 
 The site is built like a small gallery. A WebGL hero, scroll-driven reveals, page transitions that morph artwork between routes, and a contact form that reads like a letter on cream paper.
 

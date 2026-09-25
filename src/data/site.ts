@@ -2,13 +2,12 @@ export const site = {
   name: 'Kio',
   studio: 'Softly Drawn',
   role: 'Digital artist',
-  tagline: 'Semi-realistic character art, custom designs & original characters.',
+  tagline: 'Semi-realistic character art, original characters, book covers & icons.',
   bio: [
     "Hi! I'm Kio — a digital artist specialising in semi-realistic character art, custom designs and original characters.",
     'My style leans toward soft, detailed visuals with a focus on natural expressions and clean rendering. Feel free to message me anytime.',
   ],
-  // TODO(kio): add a public contact email — used by the contact page + footer.
-  email: '',
+  email: 'jhaanushka493@gmail.com',
   status: 'Open for commissions',
   threads: { label: 'Threads', handle: '@softlydrawn_', url: 'https://www.threads.com/@softlydrawn_' },
   fiverr: {
@@ -23,5 +22,6 @@ export const site = {
       { label: 'Value', value: 4.8 },
     ],
   },
+  credit: { label: 'Anit', url: 'https://anit.dev' },
   formEndpoint: import.meta.env.VITE_FORM_ENDPOINT ?? '',
 } as const

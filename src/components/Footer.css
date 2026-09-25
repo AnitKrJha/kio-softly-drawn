@@ -164,6 +164,30 @@
   line-height: 1.55;
 }
 
+.footer__credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  min-height: 44px;
+  white-space: nowrap;
+  color: var(--fg-muted);
+  transition: color 0.4s var(--ease-out);
+}
+
+.footer__credit:hover {
+  color: var(--fg);
+}
+
+.footer__heart {
+  color: var(--rose);
+  fill: currentColor;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.footer__credit:hover .footer__heart {
+  transform: scale(1.25);
+}
+
 .footer__totop {
   display: inline-flex;
   align-items: center;

@@ -3,9 +3,9 @@ import type { Artwork } from '../../data/artworks'
 /** What people can ask for. `value` is what `/contact?type=` accepts. */
 export const REQUEST_TYPES = [
   { value: 'character-art', label: 'Character art' },
-  { value: 'custom-design', label: 'Custom design' },
-  { value: 'original-character', label: 'Original character' },
-  { value: 'couple-scene', label: 'Couple or scene' },
+  { value: 'original-character', label: 'Original character (OC)' },
+  { value: 'book-cover', label: 'Book cover' },
+  { value: 'pfp-icon', label: 'PFP / icon' },
   { value: 'other', label: 'Something else' },
 ] as const
 
