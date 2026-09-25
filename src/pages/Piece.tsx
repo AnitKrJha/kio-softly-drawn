@@ -3,7 +3,7 @@ import { useParams } from 'react-router'
 import gsap from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 import { Star } from 'lucide-react'
-import { artworks, bySlug, type Artwork, type Detail } from '../data/artworks'
+import { artworks, bySlug, related, serviceLabel, type Artwork, type Detail, type Service } from '../data/artworks'
 import { reviews } from '../data/reviews'
 import { site } from '../data/site'
 import { ArtImage } from '../components/shared/ArtImage'
@@ -15,7 +15,8 @@ import { prefersReducedMotion } from '../lib/env'
 import { Lightbox, type LightboxRequest } from '../components/work/Lightbox'
 import { Details } from '../components/work/Details'
 import { NextPiece } from '../components/work/NextPiece'
-import { afterIntro, clickedPath, eyebrowFor, kindLabel, pad, setLastViewed, total, vtName, wrapIndex } from '../components/work/shared'
+import { Related } from '../components/work/Related'
+import { afterIntro, clickedPath, eyebrowFor, pad, setLastViewed, total, vtName, wrapIndex } from '../components/work/shared'
 import { NotFound } from './NotFound'
 import './Piece.css'
 
@@ -39,6 +40,14 @@ function Title({ text }: { text: string }) {
       <em>{last}</em>
     </>
   )
+}
+
+/** Each piece page doubles as the pitch for the service it shows. */
+const CTA: Record<Service, string> = {
+  'character-art': 'Order character art like this',
+  'original-character': 'Bring your OC to life',
+  'book-cover': 'Order a book cover',
+  'pfp-icon': 'Order a PFP or icon',
 }
 
 function PieceView({ art }: { art: Artwork }) {
@@ -148,9 +157,19 @@ function PieceView({ art }: { art: Artwork }) {
           <p className="piece__blurb piece__fade">{art.blurb}</p>
 
           <dl className="piece__meta piece__fade">
+            {art.kind && (
+              <div>
+                <dt>Type</dt>
+                <dd>{art.kind === 'Commission' ? 'Commission' : 'Personal work'}</dd>
+              </div>
+            )}
             <div>
-              <dt>Type</dt>
-              <dd>{kindLabel(art.kind)}</dd>
+              <dt>Service</dt>
+              <dd>
+                <TLink to={`/contact?type=${art.service}&ref=${art.slug}`} className="link" data-cursor="Open">
+                  {serviceLabel[art.service]}
+                </TLink>
+              </dd>
             </div>
             <div>
               <dt>Category</dt>
@@ -203,8 +222,8 @@ function PieceView({ art }: { art: Artwork }) {
           )}
 
           <div className="piece__actions piece__fade">
-            <TLink to={`/contact?ref=${art.slug}`} className="btn" data-cursor="Open">
-              Order something like this <span aria-hidden="true">→</span>
+            <TLink to={`/contact?type=${art.service}&ref=${art.slug}`} className="btn" data-cursor="Open">
+              {CTA[art.service]} <span aria-hidden="true">→</span>
             </TLink>
           </div>
         </div>
@@ -234,6 +253,7 @@ function PieceView({ art }: { art: Artwork }) {
       </section>
 
       {art.details.length > 0 && <Details art={art} onOpen={openDetail} />}
+      <Related items={related(art)} />
       <NextPiece next={next} />
 
       {lightbox && <Lightbox {...lightbox} pageIndex={index} onClose={() => setLightbox(null)} onOpenPiece={openPiece} />}

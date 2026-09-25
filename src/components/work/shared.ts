@@ -1,4 +1,4 @@
-import { artworks, categories, type Artwork, type Kind } from '../../data/artworks'
+import { artworks, caption, categories, type Artwork } from '../../data/artworks'
 import { introDone } from '../../lib/intro'
 
 /** 1 → "01" */
@@ -7,8 +7,9 @@ export const pad = (n: number) => String(n).padStart(2, '0')
 export const total = artworks.length
 export const wrapIndex = (i: number) => (i + total) % total
 
-export const kindLabel = (k: Kind) => (k === 'Commission' ? 'Commission' : 'Personal work')
-export const eyebrowFor = (a: Artwork) => [a.kind, a.year].filter(Boolean).join(' · ')
+export const eyebrowFor = caption
+
+const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 
 /* ───────── filters — derived from the data, never hard-coded ───────── */
 export interface Filter {
@@ -18,15 +19,11 @@ export interface Filter {
   test: (a: Artwork) => boolean
 }
 
-const kinds = [...new Set(artworks.map((a) => a.kind))]
-const plural = (k: Kind) => (k === 'Commission' ? 'Commissions' : k)
-
 export const filters: Filter[] = [
   { id: 'all', label: 'All', test: () => true },
-  ...kinds.map((k) => ({ id: k.toLowerCase(), label: plural(k), test: (a: Artwork) => a.kind === k })),
   ...categories
     .filter((c) => artworks.some((a) => a.categories.includes(c)))
-    .map((c) => ({ id: c.toLowerCase(), label: c, test: (a: Artwork) => a.categories.includes(c) })),
+    .map((c) => ({ id: slugify(c), label: c, test: (a: Artwork) => a.categories.includes(c) })),
 ].map((f) => ({ ...f, count: artworks.filter(f.test).length }))
 
 /* ───────── view-transition bookkeeping ─────────

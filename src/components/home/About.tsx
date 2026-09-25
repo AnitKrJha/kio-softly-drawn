@@ -6,7 +6,7 @@ import { useGsap } from '../../lib/useGsap'
 import { TLink } from '../../lib/transition'
 import { ArtImage } from '../shared/ArtImage'
 import { Socials } from '../shared/Socials'
-import { bySlug } from '../../data/artworks'
+import { bySlug, caption } from '../../data/artworks'
 import { site } from '../../data/site'
 import { reviews } from '../../data/reviews'
 import './About.css'
@@ -20,9 +20,9 @@ gsap.registerPlugin(ScrollTrigger)
 type Token = string | { art: string }
 const MANIFESTO: Token[] = [
   'I draw characters',
-  { art: 'hush' },
+  { art: 'autumn-beanie' },
   'who feel like they could _breathe_ — soft',
-  { art: 'candlelit-library' },
+  { art: 'moonlit-pond' },
   'light, natural expressions, and the quiet details that make someone',
   { art: 'rose-garden' },
   '_yours._',
@@ -46,7 +46,7 @@ const pieces: Piece[] = MANIFESTO.flatMap((t): Piece[] =>
 const days = reviews.map((r) => parseInt(r.duration, 10)).filter(Number.isFinite)
 const turnaround = days.length ? `${Math.min(...days)}–${Math.max(...days)} days` : ''
 
-const FIGURE_SLUG = 'hush'
+const FIGURE_SLUG = 'tulip'
 
 export function About() {
   const root = useRef<HTMLElement>(null)
@@ -175,14 +175,14 @@ export function About() {
                       art={figureArt}
                       cover
                       sizes="(max-width: 899px) 90vw, 40vw"
-                      alt={`${figureArt.title} — ${figureArt.kind.toLowerCase()} illustration by Kio`}
+                      alt={`${figureArt.title} — illustration by Kio`}
                     />
                   </span>
                 </span>
               </TLink>
               <figcaption className="about__caption">
                 <em className="serif">{figureArt.title}</em>
-                <span className="muted"> — {figureArt.kind.toLowerCase()} work</span>
+                <span className="muted"> — {caption(figureArt).toLowerCase()}</span>
               </figcaption>
             </figure>
           )}

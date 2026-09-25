@@ -21,33 +21,32 @@ interface Service {
   arts: string[]
 }
 
-// Artworks here are style references for each service, not claims about what they were made for.
+// Artworks here show each service's style; only Vows in Bloom is confirmed as a commission.
 const SERVICES: Service[] = [
   {
     type: 'character-art',
     title: ['Character', 'art'],
     desc: 'Semi-realistic portraits and full-body pieces of your characters, drawn with soft light and natural, living expressions.',
-    arts: ['witch-knight', 'rose-garden'],
+    arts: ['autumn-beanie', 'tulip', 'moonlit-pond'],
   },
   {
     type: 'original-character',
     title: ['Original', 'characters'],
     desc: "From a loose idea to a fully realised OC — I'll help you find their face, their look and the small details that make them feel real.",
     // TODO(kio): add more OC pieces here as they're cleared for the portfolio.
-    arts: ['vows-in-bloom'],
+    arts: ['vows-in-bloom', 'school-sweethearts'],
   },
   {
     type: 'book-cover',
     title: ['Book', 'covers'],
     desc: 'Cover art for your story — your characters front and centre, composed with room for the title to breathe.',
-    // TODO(kio): swap in real cover commissions once they can be shown.
-    arts: ['forest-centaur', 'candlelit-library'],
+    arts: ['celestial-sentinel'],
   },
   {
     type: 'pfp-icon',
     title: ['PFP &', 'icons'],
     desc: 'A portrait made to be seen small — profile pictures and icons for your socials, streams or community, clear at any size.',
-    arts: ['hush'],
+    arts: ['starclip', 'strawberry-sweet'],
   },
 ]
 

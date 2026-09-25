@@ -9,8 +9,11 @@ import './Details.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-/** zoom factor of each crop, relative to the frame width */
-const ZOOM = 3.2
+/**
+ * Zoom factor of each crop, relative to the frame width. Scaled to the source's real resolution so
+ * smaller originals are never blown up into mush (~450 source px across a frame at most).
+ */
+const zoomFor = (art: Artwork) => Math.min(3.2, Math.max(1.6, art.w / 450))
 /** frame is 4:5; the inner plate is 120% tall so it can drift for parallax */
 const FRAME_AR = 4 / 5
 const PLATE = 1.2
@@ -24,7 +27,7 @@ function crop(art: Artwork, d: Detail) {
   const imgRatio = art.h / art.w
   const plateH = PLATE / FRAME_AR // plate height in frame-widths
   // make sure the enlarged image always covers the plate vertically
-  const kx = Math.max(ZOOM, (plateH * 1.05) / imgRatio)
+  const kx = Math.max(zoomFor(art), (plateH * 1.05) / imgRatio)
   const ky = (kx * imgRatio) / plateH
   const solve = (focal: number, k: number) => (k <= 1 ? 50 : Math.min(100, Math.max(0, ((focal * k - 0.5) / (k - 1)) * 100)))
   return {

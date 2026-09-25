@@ -15,10 +15,10 @@ frame() {
     \( -size "${2}x${3}" xc:none -fill white -draw "roundrectangle 0,0,$(( $2 - 1 )),$(( $3 - 1 )),10,10" \) \
     -compose DstIn -composite -repage "+$4+$5" "$6"
 }
-frame "$ART/vows-in-bloom-761.webp"    236 318 660  56 f1.png
-frame "$ART/witch-knight-760.webp"     208 280 920 104 f2.png
+frame "$ART/autumn-beanie-960.webp"    236 318 660  56 f1.png
+frame "$ART/vows-in-bloom-950.webp"     208 280 920 104 f2.png
 frame "$ART/rose-garden-960.webp"      236 150 660 398 f3.png
-frame "$ART/candlelit-library-480.webp" 174 174 920 408 f4.png
+frame "$ART/celestial-sentinel-480.webp" 174 174 920 408 f4.png
 
 # background: ink, a low candle glow behind the wall, a faint rose bloom top-left
 magick -size ${W}x${H} xc:'#0e0b09' \

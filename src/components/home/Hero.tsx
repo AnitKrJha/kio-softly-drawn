@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import type { HeroGL } from '../../gl/HeroGL'
-import { artworks, type Artwork } from '../../data/artworks'
+import { artworks, caption as captionFor, type Artwork } from '../../data/artworks'
 import { site } from '../../data/site'
 import { canRunHeavyGL } from '../../lib/env'
 import { introDone } from '../../lib/intro'
@@ -283,8 +283,7 @@ export function Hero() {
           <div className="hero__caption-card">
             <span className="hero__caption-title serif">{captioned?.title}</span>
             <span className="hero__caption-meta">
-              {captioned?.kind}
-              {captioned?.year ? ` · ${captioned.year}` : ''}
+              {captioned ? captionFor(captioned) : ''}
             </span>
           </div>
         </div>

@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
-import { artworks, bySlug, type Artwork } from '../../data/artworks'
+import { artworks, bySlug, caption, type Artwork } from '../../data/artworks'
 import { prefersReducedMotion } from '../../lib/env'
 import { TLink } from '../../lib/transition'
 import { ArtImage } from '../shared/ArtImage'
 import { Seal } from '../shared/Seal'
 
-const DECK = ['vows-in-bloom', 'witch-knight', 'hush', 'forest-centaur']
+const DECK = ['autumn-beanie', 'vows-in-bloom', 'moonlit-pond', 'celestial-sentinel']
 const CYCLE_MS = 3500
 
 const deckArt = (): Artwork[] => {
@@ -86,7 +86,7 @@ export function HeroFallback() {
                     to={`/work/${art.slug}`}
                     className="hero-card__link"
                     data-cursor="View"
-                    aria-label={`${art.title} — ${art.kind.toLowerCase()} piece`}
+                    aria-label={`${art.title} — ${caption(art).toLowerCase()}`}
                   >
                     <ArtImage
                       art={art}
@@ -98,7 +98,7 @@ export function HeroFallback() {
                     />
                     <span className="hero-card__caption" aria-hidden="true">
                       <span className="hero-card__title serif">{art.title}</span>
-                      <span className="hero-card__kind">{art.kind}</span>
+                      <span className="hero-card__kind">{caption(art)}</span>
                     </span>
                   </TLink>
                 </li>

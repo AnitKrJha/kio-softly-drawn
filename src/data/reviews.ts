@@ -25,7 +25,6 @@ export const reviews: Review[] = [
     rating: 5,
     when: 'Mar 2026',
     duration: '4 days',
-    art: 'forest-centaur',
     text: 'Working with Kio was super easy. She is very fast and delivers exceptional work!',
   },
   {
@@ -34,7 +33,6 @@ export const reviews: Review[] = [
     rating: 5,
     when: 'Mar 2026',
     duration: '7 days',
-    art: 'witch-knight',
     text: 'easy to work with',
   },
   {

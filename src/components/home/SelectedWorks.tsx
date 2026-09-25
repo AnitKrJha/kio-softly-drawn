@@ -6,7 +6,7 @@ import { useGsap } from '../../lib/useGsap'
 import { getLenis } from '../../lib/scroll'
 import { TLink } from '../../lib/transition'
 import { ArtImage } from '../shared/ArtImage'
-import { artworks } from '../../data/artworks'
+import { artworks, caption } from '../../data/artworks'
 import './SelectedWorks.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -16,6 +16,9 @@ const HORIZONTAL = '(min-width: 1024px) and (prefers-reduced-motion: no-preferen
 const STACKED = '(max-width: 1023px) and (prefers-reduced-motion: no-preference)'
 
 const pad = (n: number) => String(n).padStart(2, '0')
+
+/** The home page shows the first six; the full set lives in the gallery. */
+const FEATURED = artworks.slice(0, 6)
 
 export function SelectedWorks() {
   const root = useRef<HTMLElement>(null)
@@ -125,9 +128,9 @@ export function SelectedWorks() {
           <h2 id="works-title" className="works__title display">
             Selected <em>works</em>
             <span className="works__count" aria-hidden="true">
-              ({pad(artworks.length)})
+              ({pad(FEATURED.length)})
             </span>
-            <span className="visually-hidden">, {artworks.length} pieces</span>
+            <span className="visually-hidden">, {FEATURED.length} pieces</span>
           </h2>
           <TLink to="/work" className="works__all" data-cursor="Open">
             <span className="link">Full gallery</span> <span aria-hidden="true">→</span>
@@ -137,8 +140,8 @@ export function SelectedWorks() {
 
       <div className="works__stage">
         <ol className="works__track">
-          {artworks.map((a, i) => {
-            const meta = [a.kind, a.year].filter(Boolean).join(' · ')
+          {FEATURED.map((a, i) => {
+            const meta = caption(a)
             const focal = a.details[0]
             return (
               <li
@@ -161,7 +164,7 @@ export function SelectedWorks() {
                           art={a}
                           cover
                           sizes={`(min-width: 1024px) ${Math.round((68 * a.w) / a.h)}vh, (min-width: 640px) 50vw, 100vw`}
-                          alt={`${a.title} — ${a.kind.toLowerCase()} illustration by Kio`}
+                          alt={`${a.title} — illustration by Kio`}
                         />
                       </div>
                     </div>
@@ -183,7 +186,7 @@ export function SelectedWorks() {
 
           <li className="works__end">
             <TLink to="/work" className="works__end-link" data-cursor="Open">
-              <span className="works__end-kicker eyebrow">Commissions &amp; personal work</span>
+              <span className="works__end-kicker eyebrow">{artworks.length} pieces in the gallery</span>
               <span className="works__end-title display">
                 See all <em>work</em>
               </span>

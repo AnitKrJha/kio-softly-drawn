@@ -132,7 +132,7 @@ export function Work() {
 
         <div className="work__bar">
           <p className="work__intro muted work__fade">
-            Semi-realistic characters, couples and quiet portraits — commissions and personal pieces, each drawn by hand.
+            Semi-realistic portraits, couples, quiet scenes, book covers and icons — every piece drawn by hand.
           </p>
 
           <div className="work__controls work__fade">

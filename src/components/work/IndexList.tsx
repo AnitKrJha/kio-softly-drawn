@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import gsap from 'gsap'
-import { artworks } from '../../data/artworks'
+import { artworks, serviceLabel } from '../../data/artworks'
 import { ArtImage } from '../shared/ArtImage'
 import { TLink } from '../../lib/transition'
 import { useGsap } from '../../lib/useGsap'
@@ -89,7 +89,7 @@ export function IndexList({ visible }: Props) {
       <div className="ilist__head eyebrow" aria-hidden="true">
         <span>No.</span>
         <span>Title</span>
-        <span className="ilist__col">Type</span>
+        <span className="ilist__col">Service</span>
         <span className="ilist__col">Category</span>
         <span className="ilist__col">Year</span>
       </div>
@@ -118,7 +118,7 @@ export function IndexList({ visible }: Props) {
                   {[a.kind, ...a.categories, a.year].filter(Boolean).join(' · ')}
                 </span>
               </span>
-              <span className="irow__col irow__kind">{a.kind}</span>
+              <span className="irow__col irow__kind">{serviceLabel[a.service]}</span>
               <span className="irow__col irow__cats">{a.categories.join(', ')}</span>
               <span className="irow__col irow__year">{a.year ?? ''}</span>
               <span className="irow__arrow" aria-hidden="true">
