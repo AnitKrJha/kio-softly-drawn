@@ -166,10 +166,10 @@
 
 .footer__credit {
   display: inline-flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0.4em;
+  gap: 0.2em 0.4em;
   min-height: 44px;
-  white-space: nowrap;
   color: var(--fg-muted);
   transition: color 0.4s var(--ease-out);
 }
@@ -186,6 +186,14 @@
 
 .footer__credit:hover .footer__heart {
   transform: scale(1.25);
+}
+
+/* Keep the mark and the name together when the credit wraps. */
+.footer__by {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  white-space: nowrap;
 }
 
 /* The designer's AJ mark, sized to the text. */

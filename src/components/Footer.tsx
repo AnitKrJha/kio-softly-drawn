@@ -184,6 +184,7 @@ export function Footer() {
             data-cursor="Open"
           >
             Designed and built with <Heart size={13} aria-label="love" className="footer__heart" /> by{' '}
+            <span className="footer__by">
             <svg className="footer__mark" viewBox="0 0 46 32" aria-hidden="true" focusable="false">
               <path
                 fill="currentColor"
@@ -195,6 +196,7 @@ export function Footer() {
               />
             </svg>
             <span className="link">{site.credit.label}</span>
+            </span>
           </a>
           <button type="button" className="footer__totop" onClick={toTop}>
             Back to top <ArrowUp size={16} aria-hidden="true" />
