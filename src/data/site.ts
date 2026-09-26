@@ -22,6 +22,7 @@ export const site = {
       { label: 'Value', value: 4.8 },
     ],
   },
-  credit: { label: 'Anit', url: 'https://anit.dev' },
+  /** Designer credit in the footer. Links to the case study on the designer's site. */
+  credit: { label: 'Anit Jha', url: 'https://anit.dev/projects/softly-drawn', title: 'Anit Jha, designer and developer of this site' },
   formEndpoint: import.meta.env.VITE_FORM_ENDPOINT ?? '',
 } as const

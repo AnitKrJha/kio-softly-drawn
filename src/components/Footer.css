@@ -188,6 +188,24 @@
   transform: scale(1.25);
 }
 
+/* The designer's AJ mark, sized to the text. */
+.footer__mark {
+  width: 1.4em;
+  height: auto;
+  flex-shrink: 0;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.footer__credit:hover .footer__mark {
+  transform: translateY(-1px) rotate(-4deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer__credit:hover .footer__mark {
+    transform: none;
+  }
+}
+
 .footer__totop {
   display: inline-flex;
   align-items: center;

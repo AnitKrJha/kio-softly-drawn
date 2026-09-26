@@ -175,8 +175,25 @@ export function Footer() {
           <p className="footer__legal">
             © {year} {site.brand} · {site.artist}. {LEGAL}
           </p>
-          <a className="footer__credit" href={site.credit.url} target="_blank" rel="noreferrer" data-cursor="Open">
-            Website designed with <Heart size={13} aria-label="love" className="footer__heart" /> by{' '}
+          <a
+            className="footer__credit"
+            href={site.credit.url}
+            target="_blank"
+            rel="noopener"
+            title={site.credit.title}
+            data-cursor="Open"
+          >
+            Designed and built with <Heart size={13} aria-label="love" className="footer__heart" /> by{' '}
+            <svg className="footer__mark" viewBox="0 0 46 32" aria-hidden="true" focusable="false">
+              <path
+                fill="currentColor"
+                d="M21.201 0.528l-15.055 22.56h8.063l6.991-10.68 2.488 3.646 3.946-5.919-6.434-9.607z"
+              />
+              <path
+                fill="currentColor"
+                d="M3.273 27.42l-2.788 4.246c5.719 0.014 17.834 0.043 20.545 0.043s5.075-2.545 5.919-3.817l2.316-3.345c0.5 0.786 1.879 2.831 3.388 4.718s3.946 2.416 4.975 2.445h4.418l-8.793-13.296 11.838-17.928h-18.572l2.831 4.289h4.975c-4.346 6.519-13.236 19.858-14.025 21.059s-2.245 1.558-2.874 1.587h-14.154z"
+              />
+            </svg>
             <span className="link">{site.credit.label}</span>
           </a>
           <button type="button" className="footer__totop" onClick={toTop}>
